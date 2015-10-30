@@ -1,0 +1,17 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\HealthManager.cs">
+    <Files>
+      <File FileName="Assets\Scripts\MainMenu.cs" Line="21" Column="3" />
+      <File FileName="Assets\Scripts\PlayerController.cs" Line="95" Column="22" />
+      <File FileName="Assets\Scripts\PauseMenu.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\LifeManager.cs" Line="59" Column="58" />
+      <File FileName="Assets\Scripts\LifePickUp.cs" Line="6" Column="33" />
+      <File FileName="Assets\Scripts\HealthManager.cs" Line="48" Column="3" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
