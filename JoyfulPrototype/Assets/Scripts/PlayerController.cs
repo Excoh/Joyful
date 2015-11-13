@@ -174,8 +174,8 @@ public class PlayerController : MonoBehaviour {
         //detect input for firing projectiles and using the sword
         if (Input.GetButton ("Fire1"))
 		{
-            if (ProjectileChargeCounter.checkAmmo())
-            {
+            //if (ProjectileChargeCounter.checkAmmo())
+            //{
                 if (shotDelayCounter <= 0)
                 {
                     shotDelayCounter = shotDelay;
@@ -183,7 +183,7 @@ public class PlayerController : MonoBehaviour {
                     starInstance.GetComponent<Rigidbody2D>().velocity = mouseTargeting;
                     ProjectileChargeCounter.decreaseProjectile();
                 }
-            }
+           //}
 		}
 		if (anim.GetBool("Sword")) 
 		{
