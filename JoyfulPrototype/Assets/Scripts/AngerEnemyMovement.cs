@@ -3,110 +3,181 @@ using System.Collections;
 
 public class AngerEnemyMovement : MonoBehaviour
 {
-	public float moveSpeed;
-	public bool moveRight;
-	public float jumpHeight;
 
-	public Transform wallCheck;
-	public float wallCheckRadius;
-	public LayerMask whatIsWall;
-	private bool hittingWall;
-	
-	public Transform groundCheck;
-	public float groundCheckRadius;
-	public LayerMask whatIsGround;
-	private bool grounded;
+    //Psuedo-Constants
+    Vector3 LEFT_SPRITE = new Vector3(1f, 1f, 1f);
+    Vector3 RIGHT_SPRITE = new Vector3(-1f, 1f, 1f);
 
-	private bool notAtEdge;
-	public Transform edgeCheck;
+    //Public Members
+    public float moveSpeed;
+    public float wallCheckRadius;
+    public float groundCheckRadius;
+    public float playerCheckRadius;
+    public LayerMask whatIsWall; //Lefted as public because Wall may have its own Layer Mask.
+    public int distanceOfPace;
 
-	//Variables for Anger's Path
-	public Transform pathCheck;
-	public float pathRadius;
-	public LayerMask whatIsPath;
-	private bool pathEnd;
+    //Private Members
+    private Vector2 _startPosition;
+    private Vector2 _LeftMostPosition;
+    private Vector2 _RightMostPosition;
+    private Rigidbody2D _rigidbody;
+    private Transform _wallCheck;
+    private Transform _groundCheck;
+    private Transform _edgeCheck;
+    private Transform _playerTransform;
+    private bool _hasRoomToMove;
+    private bool _grounded;
+    private bool _hittingWall;
+    private LayerMask _groundLayerMask;
+    private bool _movingLeft;
+    private bool _movingRight;
+    private bool _returning;
+    private float _distanceFromPlayer;
+    private bool _isPacing;
+    private bool _NeedsToMoveLeft;
 
-	public float playerCheckRadius;
-	public LayerMask whatIsPlayer;
-	public Transform playerTransform;
-	private bool playerFound;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
-		//Checking for Player
-		playerFound = Physics2D.OverlapCircle (transform.position, playerCheckRadius, whatIsPlayer);
+    void Start()
+    {
+        _Init_Fear();
+    }
 
-		if (playerFound)
-		{ChasePlayer();}
+    private void _Init_Fear()
+    {
+        try
+        {
+            _startPosition = this.gameObject.transform.position;
+            _LeftMostPosition = new Vector2(_startPosition.x - distanceOfPace, _startPosition.y);
+            _RightMostPosition = new Vector2(_startPosition.x + distanceOfPace, _startPosition.y);
+            _rigidbody = this.gameObject.GetComponent<Rigidbody2D>();
+            _wallCheck = this.gameObject.transform.FindChild("WallCheck");
+            _groundCheck = this.gameObject.transform.FindChild("GroundCheck");
+            _edgeCheck = this.gameObject.transform.FindChild("EdgeCheck");
+            _playerTransform = GameObject.FindWithTag("Player").transform;
+            _groundLayerMask = LayerMask.GetMask("Ground");
+            _movingLeft = true;
+            _movingRight = false;
+            _returning = false;
+            _isPacing = true;
+            _NeedsToMoveLeft = true;
+        }
+        catch
+        {
+            Debug.Log("Something is wrong with _Init_Anger()");
+        }
+    }
 
-		else
-		{FollowPath();}
-	}
+    void Update()
+    {
+        _Sense();
+        _Think();
+        _Act();
+    }
 
-	void FixedUpdate()
-	{this.grounded = Physics2D.OverlapCircle (groundCheck.position, groundCheckRadius, whatIsGround);}
+    private void _Sense()
+    {
+        this._grounded = Physics2D.OverlapCircle(_groundCheck.position, groundCheckRadius, _groundLayerMask);
+        this._hittingWall = Physics2D.OverlapCircle(_wallCheck.position, wallCheckRadius, whatIsWall);
+        this._hasRoomToMove = Physics2D.OverlapCircle(_edgeCheck.position, wallCheckRadius, whatIsWall);
+        this._distanceFromPlayer = Vector2.Distance(_playerTransform.position, transform.position);
+    }
 
-	void FollowPath () //When Player is not in range, Anger follows Path
-	{
-		//Checking for end of path
-		pathEnd = Physics2D.OverlapCircle (pathCheck.position, pathRadius, whatIsPath);
+    private void _Think()
+    {
+        if (_distanceFromPlayer < playerCheckRadius) //If player is within range.
+        {
+            _isPacing = false;
+        }
+        else if (!_isPacing)
+        {
+            _isPacing = true;
+        }    
+    }
 
-		if (pathEnd)
-		{moveRight = !moveRight;}
-		
-		if (moveRight)
-		{print("right");
-			transform.localScale = new Vector3(-1f, 1f, 1f);
-			GetComponent<Rigidbody2D> ().velocity = new Vector2 (moveSpeed, GetComponent<Rigidbody2D> ().velocity.y);
-		}
-		
-		else 
-		{print ("Left");
-			transform.localScale = new Vector3(1f, 1f, 1f);
-			GetComponent<Rigidbody2D> ().velocity = new Vector2 (-moveSpeed, GetComponent<Rigidbody2D> ().velocity.y);
-		}
-	}
+    private void _Act()
+    {
+        if (_isPacing)
+        {
+            _Pacing();
+        }
+        else
+        {
+            if (_returning)
+            {
+                _ReturnToStartPosition();
+            }
+            else if (_distanceFromPlayer < playerCheckRadius && _distanceFromPlayer > 0.1f) //If player is within range.
+            {
+                _Chase();
+            } 
+        }
+    }
 
-	void ChasePlayer () //When Player is in range, Anger will chase Player
-	{
-		this.hittingWall = Physics2D.OverlapArea (wallCheck.position, groundCheck.position, whatIsWall);
-		
-		notAtEdge = Physics2D.OverlapCircle (edgeCheck.position, wallCheckRadius, whatIsWall);
-		
-		if (!notAtEdge && this.grounded)
-		{Jump ();}
-		
-		if (hittingWall && this.grounded) 
-		{Jump ();}
+    void _Pacing()
+    {
+        float relativePoint;
+        //Determine what direction it must pace towards.
+        if (_NeedsToMoveLeft)
+        {
+            relativePoint = _LeftMostPosition.x - transform.position.x;
+        }
+        else
+        {
+            relativePoint = _RightMostPosition.x - transform.position.x;
+        }
 
-		float relativePoint = playerTransform.position.x - transform.position.x;
-		
-		if (relativePoint > 1.0)
-		{
-			transform.localScale = new Vector3(-1f, 1f, 1f);
-			GetComponent<Rigidbody2D> ().velocity = new Vector2 (moveSpeed, GetComponent<Rigidbody2D> ().velocity.y);
-			
-			print ("Object is to the left");
-		}
-		
-		else if (relativePoint < 1.0)
-		{
-			transform.localScale = new Vector3(1f, 1f, 1f);
-			GetComponent<Rigidbody2D> ().velocity = new Vector2 (-moveSpeed, GetComponent<Rigidbody2D> ().velocity.y);
-			
-			print ("Object is to the right");
-		}
-		
-		else 
-		{print ("conflict");}
-	}
+        //If at the edge of pacing range. Change directions.
+        if(Mathf.Abs(relativePoint) < 1f)
+        {
+            _NeedsToMoveLeft = !_NeedsToMoveLeft;
+        }
 
-	void Jump()
-	{GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jumpHeight);}
+        _Move(relativePoint);
+    }
+
+    private void _Chase()
+    {
+        if (_hasRoomToMove)
+        {
+            _Move(_playerTransform.position.x - transform.position.x);
+        }
+        else
+        {
+            _returning = true;
+        }
+    }
+
+    private void _Move(float relativePoint)
+    {
+        //Moving Left
+        if (relativePoint < 0.0)
+        {
+            transform.localScale = LEFT_SPRITE;
+            _rigidbody.velocity = new Vector2(-moveSpeed, _rigidbody.velocity.y);
+            _movingLeft = true;
+            _movingRight = false;
+        }
+        //Moving Right
+        else if (relativePoint >= 0.0)
+        {
+            transform.localScale = RIGHT_SPRITE;
+            _rigidbody.velocity = new Vector2(moveSpeed, _rigidbody.velocity.y); ;
+            _movingRight = true;
+            _movingLeft = false;
+        }
+    }
+
+    private void _ReturnToStartPosition()
+    {
+        float relativePoint= _startPosition.x - transform.position.x;
+        if (Mathf.Abs(relativePoint) > 0.1f)
+        {
+            _Move(relativePoint);
+        }
+        else
+        {
+            _isPacing = true;
+            _returning = false;
+        }
+    }
 }

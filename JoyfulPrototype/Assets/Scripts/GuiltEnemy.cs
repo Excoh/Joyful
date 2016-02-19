@@ -2,117 +2,159 @@
 using System.Collections;
 public class GuiltEnemy : MonoBehaviour {
 
-	//speed and direction guilt moves
+    //Psuedo-Constants
+    Vector3 UP_SPRITE = new Vector3(1f, 1f, 1f);
+    Vector3 DOWN_SPRITE = new Vector3(1f, -1f, 1f);
+
+    //Public Members
     public float moveSpeed;
-    public bool moveUp;
-
-	//wall checks
-    public Transform wallCheck;
     public float wallCheckRadius;
+    public float playerCheckRadius;
     public LayerMask whatIsWall;
-    private bool hittingWall;
-
-	//Only kept the edge check as it seemed to throw a lot off otherwise
-    private bool notAtEdge;
-    public Transform edgeCheck;
-
-	//Timers and stunned bool
-    private float timeLimit = 5.0f;
-	private float waitTimer = 0f;
-    private float stunTime = 2.0f;
-    public bool stunned;
-
-	//increases the left and right area for checking for player
-	private double leftCheck;
-	private double rightCheck;
-
-	//vars for player, projectile, and the firing point from guilt
-	public static Transform target;
+    public float cooldownTimeUntilNextMovement;
+    public float stunTime;
 	public GameObject enemyProjectile;
 	public Transform firingPoint;
 
+    //Private Members
+    private bool _movingDown;
+    private bool _isStunned;
+    private bool _hittingWall;
+    private Transform _playerTransform;
+    private Transform _wallCheck;
+    private Transform _edgeCheck;
+    private Rigidbody2D _rigidbody;
+    private float waitTimer = 0f;
+    private float _distanceFromPlayer;
+    private float _movementTimer;
+
     // Use this for initialization
     void Start () {
-		//start with guilt not being stunned, sets target to player, and increases the detection range
-        stunned = false;
-		target = GameObject.FindWithTag ("Player").transform;
-		leftCheck = transform.position.x - .5;
-		rightCheck = transform.position.x + .5;
+        _Init_Guilt();
 	}
+
+    private void _Init_Guilt()
+    {
+        try
+        {
+            //start with guilt not being stunned, sets target to player, and increases the detection range
+            _isStunned = false;
+            _playerTransform = GameObject.FindWithTag("Player").transform;
+            _rigidbody = this.gameObject.GetComponent<Rigidbody2D>();
+            _wallCheck = this.gameObject.transform.FindChild("WallCheck");
+            _edgeCheck = this.gameObject.transform.FindChild("EdgeCheck");
+            _movementTimer = cooldownTimeUntilNextMovement;
+        }
+        catch
+        {
+            Debug.Log("Something wrong with _Init_Guilt");
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {
-		//just decrements the timer if stunned and stops motion
-        if (stunned)
-        {
-            stunTime -= Time.deltaTime;
-            GetComponent<Rigidbody2D>().gravityScale = 0;
-			GetComponent<Rigidbody2D> ().velocity = new Vector2 (GetComponent<Rigidbody2D> ().velocity.x, 0);
+        _Sense();
+        _Think();
+        _Act();
+		
+    }   
 
-            if (stunTime <= 0)
+    private void _Sense()
+    {
+        this._distanceFromPlayer = Vector2.Distance(_playerTransform.position, transform.position);
+        this._hittingWall = Physics2D.OverlapCircle(_wallCheck.position, wallCheckRadius, whatIsWall);
+    }
+
+    private void _Think()
+    {
+        if (!_isStunned)
+        {
+            //timer between direction change
+            if (_movementTimer > 0)
             {
-                stunned = false;
+                _movementTimer -= Time.deltaTime;
+            }         
+            //checks for if the timer is less than 0 and if it is already attached to a wall 
+            if (_hittingWall && _movementTimer <= 0)
+            {
+                //resets timer and changes vertical direction
+                _movingDown = !_movingDown;
+                _movementTimer = cooldownTimeUntilNextMovement;
             }
+        }
+    }
+
+    private void _Act()
+    {
+        //just decrements the timer if stunned and stops motion
+        if (_isStunned)
+        {
+            _Stunned();
         }
         else
         {
-			//timer between direction change
-            if (timeLimit > 0)
-            {
-                timeLimit -= Time.deltaTime;
-            }
-
-            this.hittingWall = Physics2D.OverlapCircle(wallCheck.position, wallCheckRadius, whatIsWall);
-
-            notAtEdge = Physics2D.OverlapCircle(edgeCheck.position, wallCheckRadius, whatIsWall);
-			//checks for if the timer is less than 0 and if it is already attached to a wall 
-            if (hittingWall && timeLimit <= 0)
-            {
-				//resets timer and changes vertical direction
-                moveUp = !moveUp;
-                timeLimit = 5.0f;
-            }
-
-			//changes direction of travel and direction guilt is facing
-            if (moveUp)
-            {
-                transform.localScale = new Vector3(1f, -1f, 1f);
-				GetComponent<Rigidbody2D> ().velocity = new Vector2 (GetComponent<Rigidbody2D> ().velocity.x, moveSpeed);
-            }
-            else
-            {
-                transform.localScale = new Vector3(1f, 1f, 1f);
-				GetComponent<Rigidbody2D> ().velocity = new Vector2 (GetComponent<Rigidbody2D> ().velocity.x, -moveSpeed);
-            }
-
-			//timer between shots
-			if (waitTimer > 0)
-			{
-				waitTimer -= Time.deltaTime;
-			}
-			//if the player is between the checks
-			else if (target.position.x >= leftCheck && target.position.x <= rightCheck) 
-			{
-				//and if guilt is turned directionaly towards the player
-				if (transform.localScale.y == 1 && target.position.y > transform.position.y) 
-				{
-					//fire a projectile and reset the timer
-					Instantiate (enemyProjectile, firingPoint.position, firingPoint.rotation);
-					waitTimer = .5f;
-				}
-				else if (transform.localScale.y == -1 && target.position.y < transform.position.y) {
-					Instantiate (enemyProjectile, firingPoint.position, firingPoint.rotation);
-					waitTimer = .5f;
-				}
-			}
-
+            _Move();
+            _Shooting();
         }
-    }   
+    }
 
-	//if guilt is stunned, set stunned to true and set the timer to 2 seconds
+    //is called from player projectile. Possible refactor?
     public void isStunned()
     {
-        stunned = true;
+        _isStunned = true;
         stunTime = 2f;
+    }
+
+    private void _Stunned()
+    {
+        stunTime -= Time.deltaTime;
+        _rigidbody.gravityScale = 0;
+        _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0);
+
+        if (stunTime <= 0)
+        {
+            _isStunned = false;
+        }
+    }
+
+    private void _Move()
+    {
+        //changes direction of travel and direction guilt is facing
+        if (_movingDown)
+        {
+            transform.localScale = DOWN_SPRITE;
+            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, moveSpeed);
+        }
+        else
+        {
+            transform.localScale = UP_SPRITE;
+            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, -moveSpeed);
+        }
+    }
+
+    private void _Shooting()
+    {
+        //timer between shots
+        if (waitTimer > 0)
+        {
+            waitTimer -= Time.deltaTime;
+        }
+        //if the player is between the checks
+        else if (_distanceFromPlayer < playerCheckRadius && this._distanceFromPlayer > 1f)
+        {
+            //and if guilt is turned directionaly towards the player
+            if (transform.localScale.y == 1 && _playerTransform.position.y > transform.position.y)
+            {
+                //fire a projectile and reset the timer
+                Instantiate(enemyProjectile,this.transform.position, Quaternion.identity);
+                //TODO: Shot in direction of player.
+                waitTimer = .5f;
+            }
+            else if (transform.localScale.y == -1 && _playerTransform.position.y < transform.position.y)
+            {
+                Instantiate(enemyProjectile, this.transform.position, Quaternion.identity);
+                waitTimer = .5f;
+            }
+        }
     }
 }
