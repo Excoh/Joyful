@@ -181,7 +181,7 @@ public class PlayerController : MonoBehaviour {
                     shotDelayCounter = shotDelay;
                     GameObject starInstance = (GameObject)Instantiate(ninjaStar, firePoint.position, firePoint.rotation);
                     starInstance.GetComponent<Rigidbody2D>().velocity = mouseTargeting;
-                    ProjectileChargeCounter.decreaseProjectile();
+                   // ProjectileChargeCounter.decreaseProjectile();
                 }
            //}
 		}
