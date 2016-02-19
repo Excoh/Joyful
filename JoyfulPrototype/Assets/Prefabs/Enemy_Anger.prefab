@@ -216,29 +216,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 4
-  moveRight: 0
-  jumpHeight: 4
-  wallCheck: {fileID: 415148}
   wallCheckRadius: .100000001
+  groundCheckRadius: .200000003
+  playerCheckRadius: 5
   whatIsWall:
     serializedVersion: 2
     m_Bits: 256
-  groundCheck: {fileID: 409978}
-  groundCheckRadius: .200000003
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 256
-  edgeCheck: {fileID: 404996}
-  pathCheck: {fileID: 404996}
-  pathRadius: .5
-  whatIsPath:
-    serializedVersion: 2
-    m_Bits: 98304
-  playerCheckRadius: 5
-  whatIsPlayer:
-    serializedVersion: 2
-    m_Bits: 512
-  playerTransform: {fileID: 0}
+  distanceOfPace: 3
 --- !u!212 &21260742
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -300,6 +284,10 @@ Prefab:
       propertyPath: groundCheck
       value: 
       objectReference: {fileID: 409978}
+    - target: {fileID: 0}
+      propertyPath: distanceOfPace
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 188016}

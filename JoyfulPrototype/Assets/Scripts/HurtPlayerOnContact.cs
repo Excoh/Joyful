@@ -17,7 +17,7 @@ public class HurtPlayerOnContact : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		if (other.name == "Player") 
+		if (other.tag == "Player") 
 		{
 			HealthManager.HurtPlayer(damageToGive);
 
@@ -32,6 +32,6 @@ public class HurtPlayerOnContact : MonoBehaviour {
 			{
 				player.knockFromRight = false;
 			}
-		}
-	}
+        }    
+    }
 }

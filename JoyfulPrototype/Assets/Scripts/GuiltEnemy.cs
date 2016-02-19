@@ -14,7 +14,7 @@ public class GuiltEnemy : MonoBehaviour {
     public float cooldownTimeUntilNextMovement;
     public float stunTime;
 	public GameObject enemyProjectile;
-	public Transform firingPoint;
+    public float projectileSpeed;
 
     //Private Members
     private bool _movingDown;
@@ -140,21 +140,12 @@ public class GuiltEnemy : MonoBehaviour {
             waitTimer -= Time.deltaTime;
         }
         //if the player is between the checks
-        else if (_distanceFromPlayer < playerCheckRadius && this._distanceFromPlayer > 1f)
+        else if (_distanceFromPlayer < playerCheckRadius && this._distanceFromPlayer > 0.5f)
         {
-            //and if guilt is turned directionaly towards the player
-            if (transform.localScale.y == 1 && _playerTransform.position.y > transform.position.y)
-            {
-                //fire a projectile and reset the timer
-                Instantiate(enemyProjectile,this.transform.position, Quaternion.identity);
-                //TODO: Shot in direction of player.
-                waitTimer = .5f;
-            }
-            else if (transform.localScale.y == -1 && _playerTransform.position.y < transform.position.y)
-            {
-                Instantiate(enemyProjectile, this.transform.position, Quaternion.identity);
-                waitTimer = .5f;
-            }
+            GameObject projectile = (GameObject)Instantiate(enemyProjectile, this.transform.position, Quaternion.identity);
+            Vector2 directionToShoot = _playerTransform.position - this.transform.position;
+            projectile.GetComponent<Rigidbody2D>().velocity = directionToShoot.normalized * projectileSpeed;
+            waitTimer = .5f;
         }
     }
 }

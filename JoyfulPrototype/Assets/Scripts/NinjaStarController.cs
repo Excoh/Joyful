@@ -31,7 +31,8 @@ public class NinjaStarController : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		if (other.tag == "Enemy") 
+        
+        if (other.tag == "Enemy") 
 		{
 			//Instantiate(enemyDeathEffect, other.transform.position, other.transform.rotation);
 			//Destroy (other.gameObject);
@@ -52,9 +53,11 @@ public class NinjaStarController : MonoBehaviour {
         {
             other.GetComponent<GuiltEnemy>().isStunned();
         }
-
-        Instantiate (impactEffect, transform.position, transform.rotation);
-		Destroy (gameObject);
+        if (other.tag != "Player")
+        {
+            Instantiate(impactEffect, transform.position, transform.rotation);
+            Destroy(gameObject);
+        }
 	}
 
 }

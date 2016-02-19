@@ -10,6 +10,7 @@ TagManager:
   - Weapon
   - Destructible
   - Stunnable
+  - Enemy Projectile
   layers:
   - Default
   - TransparentFX
