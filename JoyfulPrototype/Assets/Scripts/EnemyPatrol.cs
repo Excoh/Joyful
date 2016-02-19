@@ -2,41 +2,77 @@
 using System.Collections;
 
 public class EnemyPatrol : MonoBehaviour {
+    
+    //Psuedo-Constants
+    Vector3 LEFT_SPRITE = new Vector3(1f, 1f, 1f);
+    Vector3 RIGHT_SPRITE = new Vector3(-1f, 1f, 1f);
+    
+    //Public Members
+    public float moveSpeed;
 
-	public float moveSpeed;
-	public bool moveRight;
-
-	public Transform wallCheck;
-	public float wallCheckRadius;
-	public LayerMask whatIsWall;
-	private bool hittingWall;
-
-	private bool notAtEdge;
-	public Transform edgeCheck;
+    //Private Members
+    private Rigidbody2D _rigidbody;
+    private bool _movingRight;
+	private Transform _wallCheck;
+	private float _wallCheckRadius;
+	private LayerMask _whatIsWall;
+    private bool _hittingWall;
+    private bool _hasRoomToMove;
+    private Transform _edgeCheck;
 
 	// Use this for initialization
 	void Start () {
-	
+        _Init_Enemy();
 	}
-	
-	// Update is called once per frame
-	void Update () {
 
-		this.hittingWall = Physics2D.OverlapCircle (wallCheck.position, wallCheckRadius, whatIsWall);
+    private void _Init_Enemy()
+    {
+        try {
+            _rigidbody = this.gameObject.GetComponent<Rigidbody2D>();
+            _wallCheck = this.gameObject.transform.FindChild("WallCheck");
+            _edgeCheck = this.gameObject.transform.FindChild("EdgeCheck");
+            _whatIsWall = LayerMask.GetMask("Ground"); ;
+            _movingRight = false;
+            _wallCheckRadius = 0.1f;
+        }
+        catch
+        {
+            Debug.Log("Something went wrong with _Init_Enemy()");
+        }
+    }
 
-		notAtEdge = Physics2D.OverlapCircle (edgeCheck.position, wallCheckRadius, whatIsWall);
+    // Update is called once per frame
+    void Update () {
+        _Sense();
+        _Think();
+        _Act();
+    }
 
-		if (hittingWall || !notAtEdge) 
-		{
-			moveRight = !moveRight;
-		}
-		if (moveRight) {
-			transform.localScale = new Vector3(-1f, 1f, 1f);
-			GetComponent<Rigidbody2D> ().velocity = new Vector2 (moveSpeed, GetComponent<Rigidbody2D> ().velocity.y);
-		} else {
-			transform.localScale = new Vector3(1f, 1f, 1f);
-			GetComponent<Rigidbody2D> ().velocity = new Vector2 (-moveSpeed, GetComponent<Rigidbody2D> ().velocity.y);
-		}
+    private void _Sense()
+    {
+        this._hittingWall = Physics2D.OverlapCircle(_wallCheck.position, _wallCheckRadius, _whatIsWall);
+        this._hasRoomToMove = Physics2D.OverlapCircle(_edgeCheck.position, _wallCheckRadius, _whatIsWall);
+    }
 
-	}
+    private void _Think()
+    {
+        if (_hittingWall || !_hasRoomToMove)
+        {
+            _movingRight = !_movingRight;
+        }
+    }
+
+    private void _Act()
+    {
+        if (_movingRight)
+        {
+            transform.localScale = RIGHT_SPRITE;
+            _rigidbody.velocity = new Vector2(moveSpeed, _rigidbody.velocity.y);
+        }
+        else
+        {
+            transform.localScale = LEFT_SPRITE;
+            _rigidbody.velocity = new Vector2(-moveSpeed, _rigidbody.velocity.y);
+        }
+    }
 }

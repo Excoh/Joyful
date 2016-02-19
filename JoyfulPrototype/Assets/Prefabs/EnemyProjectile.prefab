@@ -12,10 +12,10 @@ GameObject:
   - 58: {fileID: 5884158}
   - 50: {fileID: 5055030}
   - 114: {fileID: 11431966}
-  - 114: {fileID: 11434132}
+  - 114: {fileID: 11429114}
   m_Layer: 10
   m_Name: EnemyProjectile
-  m_TagString: Untagged
+  m_TagString: Enemy Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -43,7 +43,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -61,6 +61,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: .1875
+--- !u!114 &11429114
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 161070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c379d7971b59b764980af5d87a7a971b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageToGive: 1
+  impactEffect: {fileID: 166942, guid: 8c54a85fc2ce49747a71cf5f11534f64, type: 2}
 --- !u!114 &11431966
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -72,23 +85,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3696ba7838765a46913dd8c09d93454, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifetime: 2.5
---- !u!114 &11434132
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 161070}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0e61d0a70f78ed4ba77506dd15cdf96, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 8
-  guilt: {fileID: 0}
-  impactEffect: {fileID: 166942, guid: 8c54a85fc2ce49747a71cf5f11534f64, type: 2}
-  rotationSpeed: -180
-  damageToGive: 1
+  lifetime: 5
 --- !u!212 &21295868
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -124,7 +121,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: rotationSpeed
-      value: -180
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Constraints
@@ -142,6 +139,30 @@ Prefab:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_GravityScale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: damageToGive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: lifetime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_TagString
+      value: Enemy Projectile
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: impactEffect
+      value: 
+      objectReference: {fileID: 166942, guid: 8c54a85fc2ce49747a71cf5f11534f64, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 161070}

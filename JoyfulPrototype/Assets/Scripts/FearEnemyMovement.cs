@@ -26,7 +26,7 @@ public class FearEnemyMovement : MonoBehaviour {
     private Transform _groundCheck;
     private Transform _edgeCheck;
     private Transform _playerTransform;
-    private bool _atEdge;
+    private bool _hasRoomToMove;
     private bool _grounded;
     private bool _hittingWall;
     private bool _playerFound;
@@ -78,15 +78,9 @@ public class FearEnemyMovement : MonoBehaviour {
     private void _Sense()
     {
         this._grounded = Physics2D.OverlapCircle(_groundCheck.position, groundCheckRadius, _groundLayerMask);
+        this._hittingWall = Physics2D.OverlapCircle(_wallCheck.position, wallCheckRadius, whatIsWall);
+        this._hasRoomToMove = Physics2D.OverlapCircle(_edgeCheck.position, wallCheckRadius, whatIsWall);
         this._distanceFromPlayer = Vector2.Distance(_playerTransform.position, transform.position);
-
-        //If enemy returned to original location
-        if (_returning && Vector2.Distance(transform.position,_startPosition) < 0.8f)
-        {
-            _hiding = true;
-            _returning = false;
-            _spriteOn.enabled = false; //Return to being idle and invisible.
-        }
     }
 
     private void _Think()
@@ -128,7 +122,7 @@ public class FearEnemyMovement : MonoBehaviour {
             if (_distanceFromPlayer < playerCheckRadius && _rigidbody.velocity.y == 0 && _distanceFromPlayer > 1f) //If player is within range.
             {
                 _Move();
-                AttackPlayer();       
+                Lunging();       
             }
         }
     }
@@ -157,53 +151,29 @@ public class FearEnemyMovement : MonoBehaviour {
 
     private void _ReturnToStartPosition()
     {
-        float relativePoint = _startPosition.x - transform.position.x;
-
-        //Moving Left
-        if (relativePoint < 0.0)
-        {
-            transform.localScale = LEFT_SPRITE;
-            _rigidbody.velocity = new Vector2(-moveSpeed, _rigidbody.velocity.y);
-            _movingLeft = true;
-            _movingRight = false;
-        }
-        //Moving Right
-        else if (relativePoint >= 0.0)
-        {
-            transform.localScale = RIGHT_SPRITE;
-            _rigidbody.velocity = new Vector2(moveSpeed, _rigidbody.velocity.y); ;
-            _movingRight = true;
-            _movingLeft = false;
-        }
+        this.transform.position = _startPosition;
+        _hiding = true;
+        _returning = false;
+        _spriteOn.enabled = false; //Return to being idle and invisible.
     }
 
-    void AttackPlayer () //When Player is in range, Fear will chase Player
+    void Lunging () //When Player is in range, Fear will chase Player
 	{
         if (!_jumping)
         {
-            this._hittingWall = Physics2D.OverlapArea(_wallCheck.position, _groundCheck.position, whatIsWall);
-
-            this._atEdge = Physics2D.OverlapCircle(_edgeCheck.position, wallCheckRadius, whatIsWall);
-
-            if (this._atEdge && this._grounded || this._hittingWall && this._grounded)
+            if (this._hasRoomToMove && this._grounded || this._hittingWall && this._grounded)
             {
                 _timeOfJump = Time.time;
-                Jump();
-                print(_rigidbody.velocity);
+                if (_movingLeft)
+                {
+                    _rigidbody.AddForce(new Vector2(-jumpDistance, jumpHeight), ForceMode2D.Force);
+                }
+                else if (_movingRight)
+                {
+                    _rigidbody.AddForce(new Vector2(jumpDistance, jumpHeight), ForceMode2D.Force);
+                }
                 _jumping = true;
             }
         }
 	}
-
-	void Jump()
-	{
-        if (_movingLeft)
-        {
-            _rigidbody.AddForce(new Vector2(-jumpDistance, jumpHeight), ForceMode2D.Force);
-        }
-        else if (_movingRight)
-        {
-            _rigidbody.AddForce(new Vector2(jumpDistance, jumpHeight), ForceMode2D.Force);
-        }
-    }
 }
