@@ -11,6 +11,7 @@ TagManager:
   - Destructible
   - Stunnable
   - Enemy Projectile
+  - Ladder
   layers:
   - Default
   - TransparentFX
