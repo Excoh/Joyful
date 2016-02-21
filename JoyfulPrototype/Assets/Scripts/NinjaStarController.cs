@@ -53,7 +53,7 @@ public class NinjaStarController : MonoBehaviour {
         {
             other.GetComponent<GuiltEnemy>().isStunned();
         }
-        if (other.tag != "Player")
+        if (other.tag != "Player"&& other.tag != "Ladder")
         {
             Instantiate(impactEffect, transform.position, transform.rotation);
             Destroy(gameObject);
