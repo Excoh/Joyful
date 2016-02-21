@@ -89,17 +89,10 @@ public class PlayerController : MonoBehaviour {
     void _Animation()
     {
         //setting properties for animation
-        _anim.SetBool("Grounded", _grounded);
-        _anim.SetFloat("Speed", Mathf.Abs(_rigidbody.velocity.x));
+        _anim.SetBool("isGrounded", _grounded);
+        _anim.SetFloat("VelocityX", Mathf.Abs(_rigidbody.velocity.x));
+        _anim.SetFloat("VelocityY", _rigidbody.velocity.y);
 
-        if (_anim.GetBool("Sword"))
-        {
-            _anim.SetBool("Sword", false);
-        }
-        if (Input.GetButtonDown("Fire2"))
-        {
-            _anim.SetBool("Sword", true);
-        }
     }
 
     void _Navigation()

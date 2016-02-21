@@ -28,17 +28,40 @@ public class CameraController : MonoBehaviour {
     private float xVel;
     private float yVel;
 
+    public Transform[] backgrounds; //Array of all the back and foregrounds to be parallaxed
+    public float smoothing = 1f; //how smooth the parallax is going to be.
+
+
+    private float[] parallaxScales; //the proportion of the camera's movement to move the background
+    private Transform cam;
+    private Vector3 previousCamPos;
+    private bool _allowParallax;
+
+    void Awake()
+    {
+        cam = this.gameObject.transform;
+    }
     // Use this for initialization
     void Start () {
 		player = FindObjectOfType<PlayerController> ();
         rbody2d = player.GetComponent<Rigidbody2D>();
         isFollowing = true;
         advancedLerpSpeed = Mathf.Clamp(advancedLerpSpeed, float.Epsilon, float.MaxValue);
-    }
-	
-	// Update is called once per frame
-	void FixedUpdate () {
+        _allowParallax = false;
 
+
+        previousCamPos = cam.position;
+
+        parallaxScales = new float[backgrounds.Length];
+        for (int i = 0; i < backgrounds.Length; i++)
+        {
+            parallaxScales[i] = backgrounds[i].position.z * -1;
+        }
+    }
+
+    // Update is called once per frame
+    void FixedUpdate () {
+        Debug.Log(_allowParallax);
         Vector3 finalSpot = new Vector3(player.transform.position.x + xOffset, player.transform.position.y + yOffset, transform.position.z);
 
         if (isFollowing)
@@ -53,7 +76,18 @@ public class CameraController : MonoBehaviour {
             float newY = Mathf.SmoothDamp(transform.position.y, advancedFollowSpot.y, ref yVel, lerpTime);
 
             transform.position = new Vector3(newX, newY, finalSpot.z);
-
         }
+    }
+
+    void Update()
+    {
+        for (int i = 0; i < backgrounds.Length; i++)
+        {
+            float parallax = (previousCamPos.x - cam.position.x) * parallaxScales[i];
+            float backgroundTargetPosX = backgrounds[i].position.x + parallax;
+            Vector3 backgroundTargetPos = new Vector3(backgroundTargetPosX, backgrounds[i].position.y, backgrounds[i].position.z);
+            backgrounds[i].position = Vector3.Lerp(backgrounds[i].position, backgroundTargetPos, smoothing * Time.deltaTime);
+        }
+        previousCamPos = cam.position;
     }
 }
