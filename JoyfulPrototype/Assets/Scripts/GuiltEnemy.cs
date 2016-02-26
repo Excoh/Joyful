@@ -15,6 +15,7 @@ public class GuiltEnemy : MonoBehaviour {
     public float stunTime;
 	public GameObject enemyProjectile;
     public float projectileSpeed;
+    public float projectileFrequency;
 
     //Private Members
     private bool _movingDown;
@@ -145,7 +146,7 @@ public class GuiltEnemy : MonoBehaviour {
             GameObject projectile = (GameObject)Instantiate(enemyProjectile, this.transform.position, Quaternion.identity);
             Vector2 directionToShoot = _playerTransform.position - this.transform.position;
             projectile.GetComponent<Rigidbody2D>().velocity = directionToShoot.normalized * projectileSpeed;
-            waitTimer = .5f;
+            waitTimer = projectileFrequency;
         }
     }
 }
