@@ -1,0 +1,31 @@
+using UnityEngine;
+using System.Collections;
+
+public class Obj_AfterFX: MonoBehaviour {
+
+	// Use this for initialization
+	void Start () {
+		alp = 125;
+		shrinkspeed = .1;
+		//For Calling instance:
+		//Obj_AfterFX someInstance = Obj_AfterFX.CreateInstance("Obj_AfterFX") as Obj_AfterFX;
+		//someinstance.sprite = this.sprite
+	}
+	
+	// Update is called once per frame
+	void Update () {
+	color.a = alp;
+		alp -= 5;
+		
+
+		Transform.localScale.x -= shrinkspeed;
+		Transform.localScale.y -= shrinkspeed;
+
+		if (alp == 0) {
+			Destroy (this);
+		}
+
+
+	}
+}
+
