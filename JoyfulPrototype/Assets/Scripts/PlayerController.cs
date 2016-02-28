@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour {
 
     void _Navigation()
     {
-        _jumping = Input.GetButton("Jump");
+        _jumping = Input.GetButtonDown("Jump");
         _firingProjectile = Input.GetButton("Fire1");
         _verticalMovement = Input.GetAxisRaw("Vertical");
     }
@@ -211,7 +211,8 @@ public class PlayerController : MonoBehaviour {
             float gravityValue = baseGravity * timedGravityScale.Evaluate(_timeFalling / secondsToReachMaxGravity);
 
             //if holding the jump button while moving upwards in a jump, gravity is reduced by some factor
-            if (_jumping && !_falling)
+            //if (_jumping && !_falling)
+            if (Input.GetButton("Jump") && !_falling)
             {
                 gravityValue *= jumpGravityReduction;
             }
