@@ -34,6 +34,9 @@ public class PlayerController : MonoBehaviour {
 	public GameObject ninjaStar;
 	public float shotDelay;
 	private float shotDelayCounter;
+	public int Lob;
+        public int MaxLob = 100;
+        public bool Old = false;
 
     //fields dealing with knockback
 	public float knockback;
@@ -170,6 +173,7 @@ public class PlayerController : MonoBehaviour {
 			transform.localScale = new Vector3(-1f, 1f, 1f);
 		}
 
+          if (Old){
         shotDelayCounter -= Time.deltaTime;
         //detect input for firing projectiles and using the sword
         if (Input.GetButton ("Fire1"))
@@ -184,6 +188,28 @@ public class PlayerController : MonoBehaviour {
                    // ProjectileChargeCounter.decreaseProjectile();
                 }
            //}
+		}
+    }else
+        {
+            {
+                if (Input.GetMouseButton(0))
+                {
+                    Lob += 1;
+                }
+                else if (Lob != 0)
+                {
+                    if (Lob > MaxLob) { Lob = MaxLob; }
+
+
+                    GameObject starInstance = (GameObject)Instantiate(ninjaStar, firePoint.position, firePoint.rotation);
+                    starInstance.GetComponent<Rigidbody2D>().velocity = _mouseTargeting;
+                    starInstance.GetComponent<NinjaStarController>().Proj_Strength = (Lob / 2);
+
+                    Lob = 0;
+
+                }
+            }
+        } 
 		}
 		if (anim.GetBool("Sword")) 
 		{
