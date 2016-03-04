@@ -17,15 +17,21 @@ public class NinjaStarController : MonoBehaviour {
 
 	public int damageToGive;
 
+	public int Arc_Counter
 	// Use this for initialization
 	void Start () {
+		GetComponent<Rigidbody2D>().gravityScale  = 0;
 		player = FindObjectOfType<PlayerController> ();
          GetComponent<Rigidbody2D>().velocity = speed * GetComponent<Rigidbody2D>().velocity.normalized;
 	}
+	Arc_Counter = 0;
 	
 	// Update is called once per frame
 	void Update () {
-		
+		Arc_Counter +=1;
+		if (Arc_Counter == 30){
+			GetComponent<Rigidbody2D>().gravityScale  = 1;
+		}
 		
 	}
 
