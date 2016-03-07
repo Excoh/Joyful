@@ -27,6 +27,7 @@ public class GuiltEnemy : MonoBehaviour {
     private float waitTimer = 0f;
     private float _distanceFromPlayer;
     private float _movementTimer;
+    private Transform _stunnedForm;
 
     // Use this for initialization
     void Start () {
@@ -44,6 +45,7 @@ public class GuiltEnemy : MonoBehaviour {
             _wallCheck = this.gameObject.transform.FindChild("WallCheck");
             _edgeCheck = this.gameObject.transform.FindChild("EdgeCheck");
             _movementTimer = cooldownTimeUntilNextMovement;
+            _stunnedForm = this.gameObject.transform.FindChild("Block");
         }
         catch
         {
@@ -110,12 +112,15 @@ public class GuiltEnemy : MonoBehaviour {
         stunTime -= Time.deltaTime;
         _rigidbody.gravityScale = 0;
         _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0);
-
+        _stunnedForm.gameObject.SetActive(true);
+        
         if (stunTime <= 0)
         {
             _isStunned = false;
+            _stunnedForm.gameObject.SetActive(false);
         }
     }
+
 
     private void _Move()
     {

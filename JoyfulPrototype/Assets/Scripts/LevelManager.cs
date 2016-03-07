@@ -43,7 +43,8 @@ public class LevelManager : MonoBehaviour {
 	{
 		Instantiate (deathParticle, player.transform.position, player.transform.rotation);
 		player.enabled = false;
-		player.GetComponent<Renderer>().enabled = false;
+		//player.GetComponent<Renderer>().enabled = false;
+        player.transform.FindChild("Graphics").GetComponent<Renderer>().enabled = false;
 		camera.isFollowing = false;
 		//gravityStore = player.GetComponent<Rigidbody2D> ().gravityScale;
 		//player.GetComponent<Rigidbody2D> ().gravityScale = 0f;
@@ -55,8 +56,9 @@ public class LevelManager : MonoBehaviour {
 		player.transform.position = currentCheckpoint.transform.position;
 		player.knockbackCount = 0;
 		player.enabled = true;
-		player.GetComponent<Renderer>().enabled = true;
-		healthManager.FullHealth ();
+		//player.GetComponent<Renderer>().enabled = true;
+        player.transform.FindChild("Graphics").GetComponent<Renderer>().enabled = true;
+        healthManager.FullHealth ();
 		healthManager.isDead = false;
 		camera.isFollowing = true;
 		Instantiate (respawnParticle, currentCheckpoint.transform.position, currentCheckpoint.transform.rotation);
