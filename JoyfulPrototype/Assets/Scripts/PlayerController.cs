@@ -191,18 +191,6 @@ public class PlayerController : MonoBehaviour {
 
     void Movement()
     {
-        if (_rigidbody.velocity.x > 0)
-        {
-            transform.localScale = RIGHT_SPRITE;
-        }
-        else if (_rigidbody.velocity.x < 0)
-        {
-            transform.localScale = LEFT_SPRITE;
-        }
-    }
-
-    void KnockBack()
-    {
         //major physics evaluation: knockback, gravity, player input, velocity changes, etc.
         if (knockbackCount <= 0)
         {
@@ -244,10 +232,22 @@ public class PlayerController : MonoBehaviour {
                 //if on the ground, move as fast as the ground speed in the direction the player is inputting
                 xVelAfterModifiers = moveSpeed * Input.GetAxisRaw("Horizontal");
             }
-
-            _rigidbody.velocity = new Vector2(xVelAfterModifiers, yVelAfterGravity);
+            _rigidbody.velocity = new Vector2(xVelAfterModifiers, yVelAfterGravity);  
         }
-        else
+
+        if (_rigidbody.velocity.x > 0)
+        {
+            transform.localScale = RIGHT_SPRITE;
+        }
+        else if (_rigidbody.velocity.x < 0)
+        {
+            transform.localScale = LEFT_SPRITE;
+        }
+    }
+
+    void KnockBack()
+    {
+        if(knockbackCount > 0)
         {
             if (knockFromRight)
             {
