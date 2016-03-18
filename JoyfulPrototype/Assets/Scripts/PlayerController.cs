@@ -33,6 +33,9 @@ public class PlayerController : MonoBehaviour {
 	public Transform firePoint;
 	public GameObject ninjaStar;
 	public float shotDelay;
+	public int Lob;
+        public int MaxLob = 100;
+        public bool Old = false;
 
     //fields dealing with knockback
 	public float knockback;
@@ -259,6 +262,41 @@ public class PlayerController : MonoBehaviour {
             }
             knockbackCount -= Time.deltaTime;
         }
+          if (Old){
+        shotDelayCounter -= Time.deltaTime;
+        //detect input for firing projectiles and using the sword
+        if (Input.GetButton ("Fire1"))
+		{
+            //if (ProjectileChargeCounter.checkAmmo())
+            //{
+                if (shotDelayCounter <= 0)
+                {
+                    shotDelayCounter = shotDelay;
+                    GameObject starInstance = (GameObject)Instantiate(ninjaStar, firePoint.position, firePoint.rotation);
+                    starInstance.GetComponent<Rigidbody2D>().velocity = mouseTargeting;
+                   // ProjectileChargeCounter.decreaseProjectile();
+		}
+    }else
+        {
+            {
+                if (Input.GetMouseButton(0))
+                {
+                    Lob += 1;
+                }
+                else if (Lob != 0)
+                {
+                    if (Lob > MaxLob) { Lob = MaxLob; }
+
+
+                    GameObject starInstance = (GameObject)Instantiate(ninjaStar, firePoint.position, firePoint.rotation);
+                    starInstance.GetComponent<Rigidbody2D>().velocity = _mouseTargeting;
+                    starInstance.GetComponent<NinjaStarController>().Proj_Strength = (Lob / 2);
+
+                    Lob = 0;
+
+                }
+            }
+        } 
     }
 
     //the player jumps, by setting a new velocity for the rigid body with the y value changed to the jumpVel field

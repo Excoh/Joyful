@@ -17,18 +17,29 @@ public class NinjaStarController : MonoBehaviour {
 
 	public int damageToGive;
 
+   public float Arc_Counter = 0;
+
+    public int Proj_Strength = 20;
+
+    public float InitGravSTR = 0.3f;
+
+    public float MaxGrav= 1;
 	// Use this for initialization
 	void Start () {
+        GetComponent<Rigidbody2D>().gravityScale = InitGravSTR;
 		player = FindObjectOfType<PlayerController> ();
          GetComponent<Rigidbody2D>().velocity = speed * GetComponent<Rigidbody2D>().velocity.normalized;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
-		
+        Arc_Counter += 1;
+        if (Arc_Counter == Proj_Strength)
+        {
+           GetComponent<Rigidbody2D>().gravityScale = MaxGrav;
+        }
+      
 	}
-
 	void OnTriggerEnter2D(Collider2D other)
 	{
         
