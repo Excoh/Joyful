@@ -159,17 +159,44 @@ public class PlayerController : MonoBehaviour {
 
     void Shooting()
     {
-        //detect input for firing projectiles and using the sword
-        if (_firingProjectile)
+         if (Old)
         {
-            if (_shotDelayCounter <= 0)
+            _shotDelayCounter -= Time.deltaTime;
+            //detect input for firing projectiles and using the sword
+            if (Input.GetButton("Fire1"))
             {
-                _shotDelayCounter = shotDelay;
-                GameObject starInstance = (GameObject)Instantiate(ninjaStar, firePoint.position, firePoint.rotation);
-                starInstance.GetComponent<Rigidbody2D>().velocity = _mouseTargeting;
-                ProjectileChargeCounter.decreaseProjectile();
+                //if (ProjectileChargeCounter.checkAmmo())
+                //{
+                if (_shotDelayCounter <= 0)
+                {
+                    _shotDelayCounter = shotDelay;
+                    GameObject starInstance = (GameObject)Instantiate(ninjaStar, firePoint.position, firePoint.rotation);
+                    starInstance.GetComponent<Rigidbody2D>().velocity = _mouseTargeting;
+                    // ProjectileChargeCounter.decreaseProjectile();
+                }
             }
-        }
+
+        }else
+            {
+                {
+                    if (Input.GetMouseButton(0))
+                    {
+                        Lob += 1;
+                    }
+                    else if (Lob != 0)
+                    {
+                        if (Lob > MaxLob) { Lob = MaxLob; }
+
+
+                        GameObject starInstance = (GameObject)Instantiate(ninjaStar, firePoint.position, firePoint.rotation);
+                        starInstance.GetComponent<Rigidbody2D>().velocity = _mouseTargeting;
+                        starInstance.GetComponent<NinjaStarController>().Proj_Strength = (Lob / 2);
+
+                        Lob = 0;
+
+                    }
+                }
+            }
     }
 
     void LadderMovement()
@@ -262,45 +289,24 @@ public class PlayerController : MonoBehaviour {
             }
             knockbackCount -= Time.deltaTime;
         }
-          if (Old){
-        shotDelayCounter -= Time.deltaTime;
-        //detect input for firing projectiles and using the sword
-        if (Input.GetButton ("Fire1"))
-		{
-            //if (ProjectileChargeCounter.checkAmmo())
-            //{
-                if (shotDelayCounter <= 0)
-                {
-                    shotDelayCounter = shotDelay;
-                    GameObject starInstance = (GameObject)Instantiate(ninjaStar, firePoint.position, firePoint.rotation);
-                    starInstance.GetComponent<Rigidbody2D>().velocity = mouseTargeting;
-                   // ProjectileChargeCounter.decreaseProjectile();
-		}
-    }else
+
+    void Powerups()
+    {
+        if (JumpPowerUp)
         {
-            {
-                if (Input.GetMouseButton(0))
-                {
-                    Lob += 1;
-                }
-                else if (Lob != 0)
-                {
-                    if (Lob > MaxLob) { Lob = MaxLob; }
+            JumpMod = 2;
+        }
 
 
-                    GameObject starInstance = (GameObject)Instantiate(ninjaStar, firePoint.position, firePoint.rotation);
-                    starInstance.GetComponent<Rigidbody2D>().velocity = _mouseTargeting;
-                    starInstance.GetComponent<NinjaStarController>().Proj_Strength = (Lob / 2);
-
-                    Lob = 0;
-
-                }
-            }
-        } 
     }
 
     //the player jumps, by setting a new velocity for the rigid body with the y value changed to the jumpVel field
 	private void Jump() {
-        _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, jumpVel);
+        _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, jumpVel*JumpMod);
+        if (JumpPowerUp)
+        {
+            JumpPowerUp = false;
+            JumpMod = 1;
+        }
 	}
 }
