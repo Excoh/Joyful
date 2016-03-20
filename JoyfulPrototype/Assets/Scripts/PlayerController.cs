@@ -62,6 +62,9 @@ public class PlayerController : MonoBehaviour {
     private float _shotDelayCounter;
     private float _timeFalling;
 
+    public bool JumpPowerUp { get; set; } 
+    private int JumpMod = 1;
+
     // Use this for initialization
     private void Start () {
         _Init_Player();
@@ -277,7 +280,7 @@ public class PlayerController : MonoBehaviour {
 
     void KnockBack()
     {
-        if(knockbackCount > 0)
+        if (knockbackCount > 0)
         {
             if (knockFromRight)
             {
@@ -289,6 +292,7 @@ public class PlayerController : MonoBehaviour {
             }
             knockbackCount -= Time.deltaTime;
         }
+    }
 
     void Powerups()
     {
