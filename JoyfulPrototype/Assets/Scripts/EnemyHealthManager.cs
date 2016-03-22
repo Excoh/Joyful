@@ -1,31 +1,42 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EnemyHealthManager : MonoBehaviour {
+public class EnemyHealthManager : MonoBehaviour
+{
 
-	public int enemyHealth;
+    public int enemyHealth;
+    public GameObject deathEffect;
+    public int pointsOnDeath;
 
-	public GameObject deathEffect;
+    public AudioSource soundEffectsSource;
+    public AudioClip[] deathClip;
+    // Use this for initialization
+    void Start()
+    {
 
-	public int pointsOnDeath;
+    }
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		if(enemyHealth <= 0 )
-		{
-			Instantiate (deathEffect, transform.position, transform.rotation);
-			ScoreManager.AddPoints(pointsOnDeath);
-			Destroy (gameObject);
-		}
-	}
+    // Update is called once per frame
+    void Update()
+    {
 
-	public void giveDamage(int damageToGive)
-	{
-		enemyHealth -= damageToGive;
-	}
+    }
+
+    public void giveDamage(int damageToGive)
+    {
+        enemyHealth -= damageToGive;
+        if (enemyHealth <= 0)
+        {
+            soundEffectsSource.clip = deathClip[Random.Range(0, deathClip.Length)];
+            soundEffectsSource.Play();
+            Instantiate(deathEffect, transform.position, transform.rotation);
+            ScoreManager.AddPoints(pointsOnDeath);
+            Invoke("Die", (float)0.3);
+        }
+    }
+
+    private void Die()
+    {
+        Destroy(gameObject);
+    }
 }

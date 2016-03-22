@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour
+{
 
     //Psuedo-Constants
     private Vector3 RIGHT_SPRITE = new Vector3(1f, 1f, 1f);
@@ -9,7 +10,7 @@ public class PlayerController : MonoBehaviour {
 
     //basic physics fields
     public float moveSpeed;
-	public float jumpVel = 10f;
+    public float jumpVel = 10f;
 
     //more in depth physics fields
     public float baseGravity = .75f;
@@ -21,24 +22,34 @@ public class PlayerController : MonoBehaviour {
     public float aerialDragModifier = .05f;
     public float aerialDriftModifier = .1f;
     public float maxAerialDrift = 5f;
-    
+
+
+    // Public sounds.
+    public AudioSource soundEffectsSource;
+    public AudioClip jumpClip;
+    public AudioClip landClip;
+    public AudioClip shootClip;
+    public AudioClip[] damageClip;
 
     //fields for dealing with detecting if the player is grounded or not
     public Transform groundCheck;
-	public float groundCheckRadius;
-	public LayerMask whatIsGround;
-	
+    public float groundCheckRadius;
+    public LayerMask whatIsGround;
+
 
     //fields dealing with player projectiles
-	public Transform firePoint;
-	public GameObject ninjaStar;
-	public float shotDelay;
+    public Transform firePoint;
+    public GameObject ninjaStar;
+    public float shotDelay;
+    public int Lob;
+    public int MaxLob = 100;
+    public bool Old = false;
 
     //fields dealing with knockback
-	public float knockback;
-	public float knockbackLength;
-	public float knockbackCount;
-	public bool knockFromRight;
+    public float knockback;
+    public float knockbackLength;
+    public float knockbackCount;
+    public bool knockFromRight;
     public bool onLadder;
     public float climbSpeed;
 
@@ -59,14 +70,19 @@ public class PlayerController : MonoBehaviour {
     private float _shotDelayCounter;
     private float _timeFalling;
 
+    public bool JumpPowerUp { get; set; }
+    private int JumpMod = 1;
+
     // Use this for initialization
-    private void Start () {
+    private void Start()
+    {
         _Init_Player();
     }
 
     void _Init_Player()
     {
-        try {
+        try
+        {
             _anim = this.gameObject.GetComponent<Animator>();
             _gravityStore = this.gameObject.GetComponent<Rigidbody2D>().gravityScale;
             _rigidbody = this.gameObject.GetComponent<Rigidbody2D>();
@@ -156,15 +172,43 @@ public class PlayerController : MonoBehaviour {
 
     void Shooting()
     {
-        //detect input for firing projectiles and using the sword
-        if (_firingProjectile)
+        if (Old)
         {
-            if (_shotDelayCounter <= 0)
+            _shotDelayCounter -= Time.deltaTime;
+            //detect input for firing projectiles and using the sword
+            if (Input.GetButton("Fire1"))
             {
-                _shotDelayCounter = shotDelay;
-                GameObject starInstance = (GameObject)Instantiate(ninjaStar, firePoint.position, firePoint.rotation);
-                starInstance.GetComponent<Rigidbody2D>().velocity = _mouseTargeting;
-                ProjectileChargeCounter.decreaseProjectile();
+                //if (ProjectileChargeCounter.checkAmmo())
+                //{
+                if (_shotDelayCounter <= 0)
+                {
+                    _shotDelayCounter = shotDelay;
+                    GameObject starInstance = (GameObject)Instantiate(ninjaStar, firePoint.position, firePoint.rotation);
+                    starInstance.GetComponent<Rigidbody2D>().velocity = _mouseTargeting;
+                    soundEffectsSource.clip = shootClip;
+                    soundEffectsSource.Play();
+                    // ProjectileChargeCounter.decreaseProjectile();
+                }
+            }
+
+        }
+        else
+        {
+            {
+                if (Input.GetMouseButton(0))
+                {
+                    Lob += 1;
+                }
+                else if (Lob != 0)
+                {
+                    if (Lob > MaxLob) { Lob = MaxLob; }
+                    GameObject starInstance = (GameObject)Instantiate(ninjaStar, firePoint.position, firePoint.rotation);
+                    starInstance.GetComponent<Rigidbody2D>().velocity = _mouseTargeting;
+                    starInstance.GetComponent<NinjaStarController>().Proj_Strength = (Lob / 2);
+                    soundEffectsSource.clip = shootClip;
+                    soundEffectsSource.Play();
+                    Lob = 0;
+                }
             }
         }
     }
@@ -232,7 +276,7 @@ public class PlayerController : MonoBehaviour {
                 //if on the ground, move as fast as the ground speed in the direction the player is inputting
                 xVelAfterModifiers = moveSpeed * Input.GetAxisRaw("Horizontal");
             }
-            _rigidbody.velocity = new Vector2(xVelAfterModifiers, yVelAfterGravity);  
+            _rigidbody.velocity = new Vector2(xVelAfterModifiers, yVelAfterGravity);
         }
 
         if (_rigidbody.velocity.x > 0)
@@ -247,22 +291,45 @@ public class PlayerController : MonoBehaviour {
 
     void KnockBack()
     {
-        if(knockbackCount > 0)
+        if (knockbackCount > 0)
         {
             if (knockFromRight)
             {
                 _rigidbody.velocity = new Vector2(-knockback, knockback);
+                soundEffectsSource.clip = damageClip[Random.Range(0, damageClip.Length)];
+                soundEffectsSource.Play();
             }
             if (!knockFromRight)
             {
                 _rigidbody.velocity = new Vector2(knockback, knockback);
+                _rigidbody.velocity = new Vector2(-knockback, knockback);
+                soundEffectsSource.clip = damageClip[Random.Range(0, damageClip.Length)];
+                soundEffectsSource.Play();
             }
             knockbackCount -= Time.deltaTime;
         }
     }
 
+    void Powerups()
+    {
+        if (JumpPowerUp)
+        {
+            JumpMod = 2;
+        }
+
+
+    }
+
     //the player jumps, by setting a new velocity for the rigid body with the y value changed to the jumpVel field
-	private void Jump() {
-        _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, jumpVel);
-	}
+    private void Jump()
+    {
+        _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, jumpVel * JumpMod);
+        soundEffectsSource.clip = jumpClip;
+        soundEffectsSource.Play();
+        if (JumpPowerUp)
+        {
+            JumpPowerUp = false;
+            JumpMod = 1;
+        }
+    }
 }
