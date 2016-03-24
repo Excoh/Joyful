@@ -37,11 +37,19 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
+<<<<<<< HEAD
+--- !u!157 &3
+LightmapSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 6
+  m_GIWorkflowMode: 1
+=======
 --- !u!157 &4
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 6
   m_GIWorkflowMode: 0
+>>>>>>> 3f9596bc65877398b8d23dc236ed7bf52d2e06d7
   m_LightmapsMode: 1
   m_GISettings:
     serializedVersion: 2
@@ -68,7 +76,11 @@ LightmapSettings:
     m_ReflectionCompression: 2
   m_LightingDataAsset: {fileID: 0}
   m_RuntimeCPUUsage: 25
+<<<<<<< HEAD
+--- !u!196 &4
+=======
 --- !u!196 &5
+>>>>>>> 3f9596bc65877398b8d23dc236ed7bf52d2e06d7
 NavMeshSettings:
   serializedVersion: 2
   m_ObjectHideFlags: 0
@@ -85,6 +97,8 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
+<<<<<<< HEAD
+=======
 --- !u!1001 &3217590
 Prefab:
   m_ObjectHideFlags: 0
@@ -9347,3 +9361,4 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -596, y: -128}
   m_Pivot: {x: 0.5, y: 0.5}
+>>>>>>> 3f9596bc65877398b8d23dc236ed7bf52d2e06d7
