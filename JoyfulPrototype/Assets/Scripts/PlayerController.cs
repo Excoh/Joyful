@@ -69,9 +69,11 @@ public class PlayerController : MonoBehaviour
     private Animator _anim;
     private float _shotDelayCounter;
     private float _timeFalling;
+    public bool jumpPowerUp;
 
-    public bool JumpPowerUp { get; set; }
-    private int JumpMod = 1;
+    private int timeToWait = 2; // wait for 2 seconds
+    private float JumpMod = 1f;
+    private float moveMod = 1.5f;
 
     // Use this for initialization
     private void Start()
@@ -310,26 +312,61 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Powerups()
+    public bool JumpPowerUp
     {
-        if (JumpPowerUp)
+        get
         {
-            JumpMod = 2;
+            return jumpPowerUp;
         }
+        set
+        {
+            jumpPowerUp = value;
+        }
+    }
 
+    public void PowerUp(int powerup)
+    {
+        switch(powerup)
+        {
+            case 1: // Jump Power Up
+                JumpMod = 1.5f;
+                jumpPowerUp = false;
+                break;
+            case 2:
+                float tempmov = moveSpeed;
+                float tempshotdelay = shotDelay;
+                Debug.Log(tempmov);
+                Debug.Log(tempshotdelay);
+                moveSpeed *= moveMod;
+                shotDelay = 0.15f;
+                StartCoroutine(Normalize(timeToWait, tempmov, tempshotdelay));
+                break;
+            case 3:
+                break;
+        }
+    }
 
+    IEnumerator Normalize(int timetowait, float tempmov, float tempshotdelay)
+    {
+        yield return new WaitForSeconds(timetowait);
+        Debug.Log(tempmov);
+        Debug.Log(tempshotdelay);
+        moveSpeed = tempmov;
+        shotDelay = tempshotdelay;
+        
+        
     }
 
     //the player jumps, by setting a new velocity for the rigid body with the y value changed to the jumpVel field
     private void Jump()
     {
+        if (jumpPowerUp)
+        {
+            PowerUp(1);
+        }
         _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, jumpVel * JumpMod);
         soundEffectsSource.clip = jumpClip;
         soundEffectsSource.Play();
-        if (JumpPowerUp)
-        {
-            JumpPowerUp = false;
-            JumpMod = 1;
-        }
+        JumpMod = 1;
     }
 }
