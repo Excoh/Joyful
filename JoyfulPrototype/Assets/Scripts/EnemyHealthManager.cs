@@ -19,7 +19,7 @@ public class EnemyHealthManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     public void giveDamage(int damageToGive)
@@ -27,16 +27,19 @@ public class EnemyHealthManager : MonoBehaviour
         enemyHealth -= damageToGive;
         if (enemyHealth <= 0)
         {
+            Debug.Log("Doing Something");
             soundEffectsSource.clip = deathClip[Random.Range(0, deathClip.Length)];
             soundEffectsSource.Play();
             Instantiate(deathEffect, transform.position, transform.rotation);
             ScoreManager.AddPoints(pointsOnDeath);
-            Invoke("Die", (float)0.3);
+            Destroy(gameObject);
+            // Invoke("Die", float(0.3));
         }
     }
 
-    private void Die()
-    {
-        Destroy(gameObject);
-    }
+    // Was part of an invoke method
+    //private void Die()
+    //{
+    //    Destroy(gameObject);
+    //}
 }
