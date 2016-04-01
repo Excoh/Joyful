@@ -19,7 +19,7 @@ public class NinjaStarController : MonoBehaviour {
 
    public float Arc_Counter = 0;
 
-    public int Proj_Strength = 20;
+    public int Proj_Strength = 30;
 
     public float InitGravSTR = 0.3f;
 
