@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
 public class PlayerController : MonoBehaviour
 {
 
@@ -69,9 +70,15 @@ public class PlayerController : MonoBehaviour
     private Animator _anim;
     private float _shotDelayCounter;
     private float _timeFalling;
+    public bool jumpPowerUp;                //flag to show that the player is going to recieve a jumpPowerUp on the next call to PowerUp (i.e. on the Jump action performed).
+    public bool moveSpeedPowerUp;           //flag to show that the player is going to recieve a moveSpeedPowerUp on the next call to PowerUp.
+    private float moveSpeedPowerUpTimeLeft;
+    private float moveSpeedPowerUpTotalRunTime = 300.0f;
 
-    public bool JumpPowerUp { get; set; }
-    private int JumpMod = 1;
+
+    private int timeToWait = 2;             // wait for 2 seconds
+    private float JumpMod = 1f;
+    private float moveMod = 1.5f;
 
     // Use this for initialization
     private void Start()
@@ -83,6 +90,7 @@ public class PlayerController : MonoBehaviour
     {
         try
         {
+            
             _anim = this.gameObject.GetComponent<Animator>();
             _gravityStore = this.gameObject.GetComponent<Rigidbody2D>().gravityScale;
             _rigidbody = this.gameObject.GetComponent<Rigidbody2D>();
@@ -235,10 +243,15 @@ public class PlayerController : MonoBehaviour
 
     void Movement()
     {
+
+        if (moveSpeedPowerUp == true)
+        {
+            PowerUp(3);
+        }
+
         //major physics evaluation: knockback, gravity, player input, velocity changes, etc.
         if (knockbackCount <= 0)
         {
-
             //evaluluate the gravity value at the current time of falling, using the base value and the timed scale
             float gravityValue = baseGravity * timedGravityScale.Evaluate(_timeFalling / secondsToReachMaxGravity);
 
@@ -273,8 +286,19 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
+                if (moveSpeedPowerUpTimeLeft >= 0.0f)
+                {
+
+                    xVelAfterModifiers = 1.9f * moveSpeed * Input.GetAxisRaw("Horizontal");
+                    Debug.Log("You are now here");
+                    moveSpeedPowerUpTimeLeft--;
+                }
                 //if on the ground, move as fast as the ground speed in the direction the player is inputting
-                xVelAfterModifiers = moveSpeed * Input.GetAxisRaw("Horizontal");
+                else
+                {
+                    xVelAfterModifiers = moveSpeed * Input.GetAxisRaw("Horizontal");
+                }
+
             }
             _rigidbody.velocity = new Vector2(xVelAfterModifiers, yVelAfterGravity);
         }
@@ -310,26 +334,81 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Powerups()
+    public bool JumpPowerUp
     {
-        if (JumpPowerUp)
+        get
         {
-            JumpMod = 2;
+            return jumpPowerUp;
         }
-
-
+        set
+        {
+            jumpPowerUp = value;
+        }
     }
+    public bool MoveSpeedPowerUp
+    {
+        get
+        {
+            return moveSpeedPowerUp;
+        }
+        set
+        {
+            moveSpeedPowerUp = value;
+        }
+    }
+
+    public void PowerUp(int powerup)
+    {
+        switch(powerup)
+        {
+            case 1: // Jump Power Up
+                JumpMod = 1.5f;
+                jumpPowerUp = false;
+                break;
+            case 2:
+                float tempmov = moveSpeed;
+                float tempshotdelay = shotDelay;
+                Debug.Log(tempmov);
+                Debug.Log(tempshotdelay);
+                moveSpeed *= moveMod;
+                shotDelay = 0.15f;
+                StartCoroutine(Normalize(timeToWait, tempmov, tempshotdelay));
+                break;
+            case 3:
+                moveSpeedPowerUpTimeLeft = moveSpeedPowerUpTotalRunTime;
+                moveSpeedPowerUp = false;
+                break;
+
+            default:
+                Debug.Log("PowerUp function called, but improper int variable recieved :" + powerup);
+                break;
+            
+            
+        }
+    }
+
+    IEnumerator Normalize(int timetowait, float tempmov, float tempshotdelay)
+    {
+        yield return new WaitForSeconds(timetowait);
+        Debug.Log(tempmov);
+        Debug.Log(tempshotdelay);
+        moveSpeed = tempmov;
+        shotDelay = tempshotdelay;
+        
+        
+    }
+
 
     //the player jumps, by setting a new velocity for the rigid body with the y value changed to the jumpVel field
     private void Jump()
     {
+        if (jumpPowerUp)
+        {
+            PowerUp(1); //1 goes to a switch statement that modifies the player JumpMod impacting JumpHeight.
+        }
         _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, jumpVel * JumpMod);
         soundEffectsSource.clip = jumpClip;
         soundEffectsSource.Play();
-        if (JumpPowerUp)
-        {
-            JumpPowerUp = false;
-            JumpMod = 1;
-        }
+        JumpMod = 1;
     }
 }
