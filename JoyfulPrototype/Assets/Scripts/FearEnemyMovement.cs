@@ -53,9 +53,19 @@ public class FearEnemyMovement : MonoBehaviour {
             _startPosition = this.gameObject.transform.position;
             _spriteOn = this.gameObject.GetComponent<SpriteRenderer>();
             _rigidbody = this.gameObject.GetComponent<Rigidbody2D>();
-            _wallCheck = this.gameObject.transform.FindChild("WallCheck");
-            _groundCheck = this.gameObject.transform.FindChild("GroundCheck");
-            _edgeCheck = this.gameObject.transform.FindChild("EdgeCheck");
+
+            _wallCheck = new GameObject("WallCheck").transform;
+            _wallCheck.position = new Vector2(_startPosition.x - 1, _startPosition.y);
+            _wallCheck.SetParent(this.gameObject.transform);
+
+            _groundCheck = new GameObject("GroundCheck").transform;
+            _groundCheck.position = new Vector2(_startPosition.x, _startPosition.y - 1.0f);
+            _groundCheck.SetParent(this.gameObject.transform);
+
+            _edgeCheck = new GameObject("EdgeCheck").transform;
+            _edgeCheck.position = new Vector2(_startPosition.x - 0.75f, _startPosition.y - 0.75f);
+            _edgeCheck.SetParent(this.gameObject.transform);
+
             _playerTransform = GameObject.FindWithTag("Player").transform;
             _groundLayerMask = LayerMask.GetMask("Ground");
             _movingLeft = true;

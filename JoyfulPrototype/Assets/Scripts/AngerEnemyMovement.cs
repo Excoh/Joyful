@@ -35,6 +35,8 @@ public class AngerEnemyMovement : MonoBehaviour
     private float _distanceFromPlayer;
     private bool _isPacing;
     private bool _NeedsToMoveLeft;
+    private float _lastSeenPlayerTime;
+    private float _forgetPlayerTime = 3f; //TODO: should consider having it as a public var.
 
 
     void Start()
@@ -50,9 +52,19 @@ public class AngerEnemyMovement : MonoBehaviour
             _LeftMostPosition = new Vector2(_startPosition.x - distanceOfPace, _startPosition.y);
             _RightMostPosition = new Vector2(_startPosition.x + distanceOfPace, _startPosition.y);
             _rigidbody = this.gameObject.GetComponent<Rigidbody2D>();
-            _wallCheck = this.gameObject.transform.FindChild("WallCheck");
-            _groundCheck = this.gameObject.transform.FindChild("GroundCheck");
-            _edgeCheck = this.gameObject.transform.FindChild("EdgeCheck");
+
+            _wallCheck = new GameObject("WallCheck").transform;
+            _wallCheck.position = new Vector2(_startPosition.x - 1, _startPosition.y);
+            _wallCheck.SetParent(this.gameObject.transform);
+
+            _groundCheck = new GameObject("GroundCheck").transform;
+            _groundCheck.position = new Vector2(_startPosition.x, _startPosition.y - 1.0f);
+            _groundCheck.SetParent(this.gameObject.transform);
+
+            _edgeCheck = new GameObject("EdgeCheck").transform;
+            _edgeCheck.position = new Vector2(_startPosition.x - 0.75f, _startPosition.y - 0.75f);
+            _edgeCheck.SetParent(this.gameObject.transform);
+
             _playerTransform = GameObject.FindWithTag("Player").transform;
             _groundLayerMask = LayerMask.GetMask("Ground");
             _movingLeft = true;
@@ -77,16 +89,20 @@ public class AngerEnemyMovement : MonoBehaviour
     private void _Sense()
     {
         this._grounded = Physics2D.OverlapCircle(_groundCheck.position, groundCheckRadius, _groundLayerMask);
-        this._hittingWall = Physics2D.OverlapCircle(_wallCheck.position, wallCheckRadius, whatIsWall);
-        this._hasRoomToMove = Physics2D.OverlapCircle(_edgeCheck.position, wallCheckRadius, whatIsWall);
+        this._hittingWall = Physics2D.OverlapCircle(_wallCheck.position, wallCheckRadius, whatIsWall) || Physics2D.OverlapCircle(_wallCheck.position, wallCheckRadius, LayerMask.GetMask("Destructible"));
+        this._hasRoomToMove = Physics2D.OverlapCircle(_edgeCheck.position, wallCheckRadius, whatIsWall) && Physics2D.OverlapCircle(_wallCheck.position, wallCheckRadius, LayerMask.GetMask("Destructible"));
         this._distanceFromPlayer = Vector2.Distance(_playerTransform.position, transform.position);
     }
 
     private void _Think()
     {
-        if (_distanceFromPlayer < playerCheckRadius) //If player is within range.
+        if (_distanceFromPlayer < playerCheckRadius && Mathf.Abs(_playerTransform.position.y - transform.position.y) < 1f) //If player is within range.
         {
-            _isPacing = false;
+            if (Time.time - _lastSeenPlayerTime > _forgetPlayerTime)
+            {
+                _isPacing = false;
+                _lastSeenPlayerTime = Time.time;
+            }
         }
         else if (!_isPacing)
         {
@@ -106,7 +122,7 @@ public class AngerEnemyMovement : MonoBehaviour
             {
                 _ReturnToStartPosition();
             }
-            else if (_distanceFromPlayer < playerCheckRadius && _distanceFromPlayer > 0.1f) //If player is within range.
+            else if (_distanceFromPlayer < playerCheckRadius && Mathf.Abs(_playerTransform.position.y - transform.position.y) < 1f && _distanceFromPlayer > 0.1f) //If player is within range.
             {
                 _Chase();
             } 
