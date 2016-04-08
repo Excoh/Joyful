@@ -325,7 +325,6 @@ public class PlayerController : MonoBehaviour
             if (!knockFromRight)
             {
                 _rigidbody.velocity = new Vector2(knockback, knockback);
-                _rigidbody.velocity = new Vector2(-knockback, knockback);
                 if (damageClip != null && soundEffectsSource != null)
                 {
                     soundEffectsSource.clip = damageClip[Random.Range(0, damageClip.Length)];

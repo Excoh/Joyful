@@ -29,7 +29,8 @@ public class HealthManager : MonoBehaviour {
 		lifeSystem = FindObjectOfType<LifeManager> ();
 
 		isDead = false;
-	}
+        playerHealth = 100;
+    }
 	
 	// Update is called once per frame
 	void Update () {

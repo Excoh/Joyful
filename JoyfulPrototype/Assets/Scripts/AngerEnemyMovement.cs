@@ -89,14 +89,14 @@ public class AngerEnemyMovement : MonoBehaviour
     private void _Sense()
     {
         this._grounded = Physics2D.OverlapCircle(_groundCheck.position, groundCheckRadius, _groundLayerMask);
-        this._hittingWall = Physics2D.OverlapCircle(_wallCheck.position, wallCheckRadius, whatIsWall) || Physics2D.OverlapCircle(_wallCheck.position, wallCheckRadius, LayerMask.GetMask("Destructible"));
-        this._hasRoomToMove = Physics2D.OverlapCircle(_edgeCheck.position, wallCheckRadius, whatIsWall) && Physics2D.OverlapCircle(_wallCheck.position, wallCheckRadius, LayerMask.GetMask("Destructible"));
+        this._hittingWall = Physics2D.OverlapCircle(_wallCheck.position, wallCheckRadius, whatIsWall);
+        this._hasRoomToMove = Physics2D.OverlapCircle(_edgeCheck.position, wallCheckRadius, whatIsWall);
         this._distanceFromPlayer = Vector2.Distance(_playerTransform.position, transform.position);
     }
 
     private void _Think()
     {
-        if (_distanceFromPlayer < playerCheckRadius && Mathf.Abs(_playerTransform.position.y - transform.position.y) < 1f) //If player is within range.
+        if (_distanceFromPlayer < playerCheckRadius && Mathf.Abs(_playerTransform.position.y - transform.position.y) < 0.5f) //If player is within range.
         {
             if (Time.time - _lastSeenPlayerTime > _forgetPlayerTime)
             {
@@ -122,7 +122,7 @@ public class AngerEnemyMovement : MonoBehaviour
             {
                 _ReturnToStartPosition();
             }
-            else if (_distanceFromPlayer < playerCheckRadius && Mathf.Abs(_playerTransform.position.y - transform.position.y) < 1f && _distanceFromPlayer > 0.1f) //If player is within range.
+            else if (_distanceFromPlayer < playerCheckRadius && Mathf.Abs(_playerTransform.position.y - transform.position.y) < 0.5f && _distanceFromPlayer > 0.1f) //If player is within range.
             {
                 _Chase();
             } 
