@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
-
+    
     //Psuedo-Constants
     private Vector3 RIGHT_SPRITE = new Vector3(1f, 1f, 1f);
     private Vector3 LEFT_SPRITE = new Vector3(-1f, 1f, 1f);
@@ -71,10 +71,14 @@ public class PlayerController : MonoBehaviour
     private float _timeFalling;
     public bool jumpPowerUp;
 
+
     private int timeToWait = 2; // wait for 2 seconds
     private float JumpMod = 1f;
     private float moveMod = 1.5f;
 
+
+    public GameObject JumpUpEffect;
+    public GameObject SpeedUpEffect;
     // Use this for initialization
     private void Start()
     {
@@ -99,6 +103,13 @@ public class PlayerController : MonoBehaviour
     //Takes care of player input and physics
     private void Update()
     {
+
+        if (jumpPowerUp)
+        {
+            JumpMod = 1.5f;
+        }
+
+
         _Animation();
         _Navigation();
         _Behavior();
@@ -187,8 +198,11 @@ public class PlayerController : MonoBehaviour
                     _shotDelayCounter = shotDelay;
                     GameObject starInstance = (GameObject)Instantiate(ninjaStar, firePoint.position, firePoint.rotation);
                     starInstance.GetComponent<Rigidbody2D>().velocity = _mouseTargeting;
-                    soundEffectsSource.clip = shootClip;
-                    soundEffectsSource.Play();
+                    if (shootClip != null && soundEffectsSource != null)
+                    {
+                        soundEffectsSource.clip = shootClip;
+                        soundEffectsSource.Play(); 
+                    }
                     // ProjectileChargeCounter.decreaseProjectile();
                 }
             }
@@ -207,8 +221,11 @@ public class PlayerController : MonoBehaviour
                     GameObject starInstance = (GameObject)Instantiate(ninjaStar, firePoint.position, firePoint.rotation);
                     starInstance.GetComponent<Rigidbody2D>().velocity = _mouseTargeting;
                     starInstance.GetComponent<NinjaStarController>().Proj_Strength = (Lob / 2);
-                    soundEffectsSource.clip = shootClip;
-                    soundEffectsSource.Play();
+                    if (shootClip != null && soundEffectsSource != null)
+                    {
+                        soundEffectsSource.clip = shootClip;
+                        soundEffectsSource.Play(); 
+                    }
                     Lob = 0;
                 }
             }
@@ -298,15 +315,21 @@ public class PlayerController : MonoBehaviour
             if (knockFromRight)
             {
                 _rigidbody.velocity = new Vector2(-knockback, knockback);
-                soundEffectsSource.clip = damageClip[Random.Range(0, damageClip.Length)];
-                soundEffectsSource.Play();
+                if (damageClip != null && soundEffectsSource != null)
+                {
+                    soundEffectsSource.clip = damageClip[Random.Range(0, damageClip.Length)];
+                    soundEffectsSource.Play(); 
+                }
             }
             if (!knockFromRight)
             {
                 _rigidbody.velocity = new Vector2(knockback, knockback);
                 _rigidbody.velocity = new Vector2(-knockback, knockback);
-                soundEffectsSource.clip = damageClip[Random.Range(0, damageClip.Length)];
-                soundEffectsSource.Play();
+                if (damageClip != null && soundEffectsSource != null)
+                {
+                    soundEffectsSource.clip = damageClip[Random.Range(0, damageClip.Length)];
+                    soundEffectsSource.Play(); 
+                }
             }
             knockbackCount -= Time.deltaTime;
         }
@@ -326,12 +349,12 @@ public class PlayerController : MonoBehaviour
 
     public void PowerUp(int powerup)
     {
+
+
+
+
         switch(powerup)
         {
-            case 1: // Jump Power Up
-                JumpMod = 1.5f;
-                jumpPowerUp = false;
-                break;
             case 2:
                 float tempmov = moveSpeed;
                 float tempshotdelay = shotDelay;
@@ -360,13 +383,18 @@ public class PlayerController : MonoBehaviour
     //the player jumps, by setting a new velocity for the rigid body with the y value changed to the jumpVel field
     private void Jump()
     {
+        _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, jumpVel * JumpMod);
         if (jumpPowerUp)
         {
-            PowerUp(1);
+            JumpMod = 1f;
+            jumpPowerUp = false;
+            Destroy(gameObject.transform.FindChild("JumpUpEffect(Clone)").gameObject);
         }
-        _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, jumpVel * JumpMod);
-        soundEffectsSource.clip = jumpClip;
-        soundEffectsSource.Play();
-        JumpMod = 1;
+
+        if (jumpClip != null && soundEffectsSource != null)
+        {
+            soundEffectsSource.clip = jumpClip;
+            soundEffectsSource.Play(); 
+        }
     }
 }
