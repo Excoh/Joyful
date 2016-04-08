@@ -83,6 +83,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         _Init_Player();
+        Lob = 50;
     }
 
     void _Init_Player()
@@ -215,7 +216,7 @@ public class PlayerController : MonoBehaviour
                 {
                     Lob += 1;
                 }
-                else if (Lob != 0)
+                else if (Lob != 50)
                 {
                     if (Lob > MaxLob) { Lob = MaxLob; }
                     GameObject starInstance = (GameObject)Instantiate(ninjaStar, firePoint.position, firePoint.rotation);
@@ -226,7 +227,7 @@ public class PlayerController : MonoBehaviour
                         soundEffectsSource.clip = shootClip;
                         soundEffectsSource.Play(); 
                     }
-                    Lob = 0;
+                    Lob = 50;
                 }
             }
         }
@@ -324,7 +325,6 @@ public class PlayerController : MonoBehaviour
             if (!knockFromRight)
             {
                 _rigidbody.velocity = new Vector2(knockback, knockback);
-                _rigidbody.velocity = new Vector2(-knockback, knockback);
                 if (damageClip != null && soundEffectsSource != null)
                 {
                     soundEffectsSource.clip = damageClip[Random.Range(0, damageClip.Length)];
