@@ -13,7 +13,7 @@ public class MainMenu : MonoBehaviour {
 
 	public void NewGame()
 	{
-		Application.LoadLevel (startLevel);
+		Application.LoadLevel (Application.loadedLevel + 1);
 
 		PlayerPrefs.SetInt ("PlayerCurrentLives", playerLives);
 
