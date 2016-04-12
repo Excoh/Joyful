@@ -28,6 +28,7 @@ public class GuiltEnemy : MonoBehaviour {
     private float _distanceFromPlayer;
     private float _movementTimer;
     private Transform _stunnedForm;
+    private Animator _anim;
 
     // Use this for initialization
     void Start () {
@@ -40,12 +41,13 @@ public class GuiltEnemy : MonoBehaviour {
         {
             //start with guilt not being stunned, sets target to player, and increases the detection range
             _isStunned = false;
+            _anim = this.gameObject.GetComponent<Animator>();
             _playerTransform = GameObject.FindWithTag("Player").transform;
             _rigidbody = this.gameObject.GetComponent<Rigidbody2D>();
             _wallCheck = this.gameObject.transform.FindChild("WallCheck");
             _edgeCheck = this.gameObject.transform.FindChild("EdgeCheck");
             _movementTimer = cooldownTimeUntilNextMovement;
-            _stunnedForm = this.gameObject.transform.FindChild("Block");
+            _stunnedForm = this.gameObject.transform.FindChild("Block");       
         }
         catch
         {
@@ -55,11 +57,21 @@ public class GuiltEnemy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        _Animation();
+        _Behavior();
+    }   
+
+    void _Animation()
+    {
+        _anim.SetBool("isStunned", _isStunned);
+    }
+
+    void _Behavior()
+    {
         _Sense();
         _Think();
         _Act();
-		
-    }   
+    }
 
     private void _Sense()
     {
