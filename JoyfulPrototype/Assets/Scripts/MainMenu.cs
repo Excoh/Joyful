@@ -3,9 +3,6 @@ using System.Collections;
 
 public class MainMenu : MonoBehaviour {
 
-	public string startLevel;
-
-	public string levelSelect;
 
 	public int playerLives;
 
@@ -13,7 +10,7 @@ public class MainMenu : MonoBehaviour {
 
 	public void NewGame()
 	{
-		Application.LoadLevel (Application.loadedLevel + 1);
+		Application.LoadLevel (1);
 
 		PlayerPrefs.SetInt ("PlayerCurrentLives", playerLives);
 
@@ -27,18 +24,23 @@ public class MainMenu : MonoBehaviour {
 
 	public void LevelSelect()
 	{
-		PlayerPrefs.SetInt ("PlayerCurrentLives", playerLives);
+		//PlayerPrefs.SetInt ("PlayerCurrentLives", playerLives);
 
-		PlayerPrefs.SetInt ("CurrentScore", 0);
+		//PlayerPrefs.SetInt ("CurrentScore", 0);
 
-		PlayerPrefs.SetInt ("PlayerCurrentHealth", playerHealth);
-		PlayerPrefs.SetInt ("PlayerMaxHealth", playerHealth);
-        PlayerPrefs.SetInt ("ProjectileCount", 100);
+		//PlayerPrefs.SetInt ("PlayerCurrentHealth", playerHealth);
+		//PlayerPrefs.SetInt ("PlayerMaxHealth", playerHealth);
+  //      PlayerPrefs.SetInt ("ProjectileCount", 100);
 
-        Application.LoadLevel (levelSelect);
+  //      Application.LoadLevel (levelSelect);
 	}
 
-	public void QuitGame()
+    public void ReturnToTitle()
+    {
+        Application.LoadLevel(0);
+    }
+
+    public void QuitGame()
 	{
 		Application.Quit ();
 	}

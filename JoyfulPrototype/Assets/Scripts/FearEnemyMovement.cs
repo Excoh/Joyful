@@ -39,6 +39,7 @@ public class FearEnemyMovement : MonoBehaviour {
     private float _timeOfJump;
     private float _timeWokenUp;
     private float _distanceFromPlayer;
+    private Animator _anim;
 
 
     void Start () 
@@ -50,16 +51,17 @@ public class FearEnemyMovement : MonoBehaviour {
     private void _Init_Fear()
     {
         try {
+            _anim = this.gameObject.GetComponent<Animator>();
             _startPosition = this.gameObject.transform.position;
             _spriteOn = this.gameObject.GetComponent<SpriteRenderer>();
             _rigidbody = this.gameObject.GetComponent<Rigidbody2D>();
 
             _wallCheck = new GameObject("WallCheck").transform;
-            _wallCheck.position = new Vector2(_startPosition.x - 1, _startPosition.y);
+            _wallCheck.position = new Vector2(_startPosition.x - 0.75f, _startPosition.y);
             _wallCheck.SetParent(this.gameObject.transform);
 
             _groundCheck = new GameObject("GroundCheck").transform;
-            _groundCheck.position = new Vector2(_startPosition.x, _startPosition.y - 1.0f);
+            _groundCheck.position = new Vector2(_startPosition.x, _startPosition.y - 0.75f);
             _groundCheck.SetParent(this.gameObject.transform);
 
             _edgeCheck = new GameObject("EdgeCheck").transform;
@@ -78,12 +80,25 @@ public class FearEnemyMovement : MonoBehaviour {
         }
     }
 
-	void Update () 
-	{
+    void Update()
+    {
+        _Animation();
+        _Behavior();
+    }
+
+    void _Animation()
+    {
+        _anim.SetFloat("VelocityY", Mathf.Abs(_rigidbody.velocity.y));
+        _anim.SetFloat("VelocityX", Mathf.Abs(_rigidbody.velocity.x));
+        _anim.SetBool("isHiding", _hiding);
+    }
+
+    void _Behavior()
+    {
         _Sense();
         _Think();
         _Act();
-	}
+    }
 
     private void _Sense()
     {
