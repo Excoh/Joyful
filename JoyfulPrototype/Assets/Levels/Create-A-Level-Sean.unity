@@ -51504,8 +51504,11 @@ MonoBehaviour:
   advancedLerpSpeed: 3
   playerVelocityModifier: .200000003
   negativeVelocityModifier: .200000003
-  backgrounds: []
-  smoothing: 1
+  backgrounds:
+  - {fileID: 1827860442}
+  - {fileID: 1827860443}
+  - {fileID: 1827860441}
+  smoothing: 3
 --- !u!4 &1040604859 stripped
 Transform:
   m_PrefabParentObject: {fileID: 444250, guid: e22b8ab1a3b03df4a8d45dab085e523a, type: 2}
@@ -91301,6 +91304,18 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 630b9f8f598fbe44ca5255909e55066a, type: 2}
   m_IsPrefabParent: 0
+--- !u!4 &1827860441 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 434022, guid: 630b9f8f598fbe44ca5255909e55066a, type: 2}
+  m_PrefabInternal: {fileID: 1827860440}
+--- !u!4 &1827860442 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 411948, guid: 630b9f8f598fbe44ca5255909e55066a, type: 2}
+  m_PrefabInternal: {fileID: 1827860440}
+--- !u!4 &1827860443 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 471858, guid: 630b9f8f598fbe44ca5255909e55066a, type: 2}
+  m_PrefabInternal: {fileID: 1827860440}
 --- !u!4 &1827934249 stripped
 Transform:
   m_PrefabParentObject: {fileID: 444250, guid: e22b8ab1a3b03df4a8d45dab085e523a, type: 2}

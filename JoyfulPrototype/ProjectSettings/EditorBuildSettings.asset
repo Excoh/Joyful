@@ -8,8 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Levels/title_menu_FINAL.unity
   - enabled: 1
-    path: Assets/Levels/Create-A-Level-Sean.unity
+    path: Assets/Levels/Leve A Sean.unity
   - enabled: 1
     path: Assets/Levels/Create-A-Level - Part B (Joey) FINAL.unity
   - enabled: 1
-    path: Assets/Levels/Level C Nizar FINAL.unity
+    path: Assets/Levels/Level C Nizar FINAL 2 (1).unity
+  - enabled: 1
+    path: Assets/Levels/Credits.unity

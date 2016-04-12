@@ -54,11 +54,11 @@ public class AngerEnemyMovement : MonoBehaviour
             _rigidbody = this.gameObject.GetComponent<Rigidbody2D>();
 
             _wallCheck = new GameObject("WallCheck").transform;
-            _wallCheck.position = new Vector2(_startPosition.x - 1, _startPosition.y);
+            _wallCheck.position = new Vector2(_startPosition.x - 0.75f, _startPosition.y);
             _wallCheck.SetParent(this.gameObject.transform);
 
             _groundCheck = new GameObject("GroundCheck").transform;
-            _groundCheck.position = new Vector2(_startPosition.x, _startPosition.y - 1.0f);
+            _groundCheck.position = new Vector2(_startPosition.x, _startPosition.y - 0.75f);
             _groundCheck.SetParent(this.gameObject.transform);
 
             _edgeCheck = new GameObject("EdgeCheck").transform;
@@ -133,6 +133,10 @@ public class AngerEnemyMovement : MonoBehaviour
     {
         float relativePoint;
         //Determine what direction it must pace towards.
+        if (!_hasRoomToMove || _hittingWall)
+        {
+            _NeedsToMoveLeft = !_NeedsToMoveLeft;
+        }
         if (_NeedsToMoveLeft)
         {
             relativePoint = _LeftMostPosition.x - transform.position.x;
