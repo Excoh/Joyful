@@ -3,18 +3,21 @@ using System.Collections;
 
 public class PauseMenu : MonoBehaviour {
 
-	public string mainMenu;
-	
-	public string levelSelect;
+	public string titleScreen;
 
-	public bool isPaused;
+	public static bool isPaused;
 
 	public GameObject pauseMenuCanvas;
 	
 	// Update is called once per frame
 	void Update () 
 	{
-		if (isPaused) {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            isPaused = !isPaused;
+        }
+
+        if (isPaused) {
 			pauseMenuCanvas.SetActive (true);
 			Time.timeScale = 0f;
 		} else {
@@ -22,10 +25,6 @@ public class PauseMenu : MonoBehaviour {
 			Time.timeScale = 1f;
 		}
 
-		if (Input.GetKeyDown (KeyCode.Escape)) 
-		{
-			isPaused = !isPaused;
-		}
 	}
 
 	public void Resume()
@@ -33,13 +32,13 @@ public class PauseMenu : MonoBehaviour {
 		isPaused = false;
 	}
 
-	public void LevelSelect()
+	public void TitleScreen()
 	{
-		Application.LoadLevel (levelSelect);
+		Application.LoadLevel (titleScreen);
 	}
 
 	public void Quit()
 	{
-		Application.LoadLevel (mainMenu);
+        Application.Quit();
 	}
 }

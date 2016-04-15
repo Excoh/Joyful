@@ -110,10 +110,12 @@ public class PlayerController : MonoBehaviour
             JumpMod = 1.5f;
         }
 
-
-        _Animation();
-        _Navigation();
-        _Behavior();
+        if (!PauseMenu.isPaused)
+        {
+            _Animation();
+            _Navigation();
+            _Behavior();
+        }
     }
 
     void _Animation()

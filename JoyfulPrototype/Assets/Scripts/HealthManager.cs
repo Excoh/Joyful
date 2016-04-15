@@ -10,8 +10,10 @@ public class HealthManager : MonoBehaviour {
 	
 	Text text;
 
+    
 	private LevelManager levelManager;
 
+    public Slider healthBar;
 	public bool isDead;
 
 	private LifeManager lifeSystem;
@@ -43,6 +45,7 @@ public class HealthManager : MonoBehaviour {
 		}
 
 		text.text = "" + playerHealth;
+        healthBar.value = playerHealth / 100.0f;
 	}
 
 	public static void HurtPlayer(int damageToGive)

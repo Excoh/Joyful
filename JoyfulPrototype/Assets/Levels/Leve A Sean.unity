@@ -2391,6 +2391,7 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e22b8ab1a3b03df4a8d45dab085e523a, type: 2}
   m_IsPrefabParent: 0
+<<<<<<< HEAD
 --- !u!1 &57233895
 GameObject:
   m_ObjectHideFlags: 0
@@ -2467,6 +2468,8 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 57233895}
+=======
+>>>>>>> master
 --- !u!1001 &58412640
 Prefab:
   m_ObjectHideFlags: 0
@@ -6504,6 +6507,7 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e22b8ab1a3b03df4a8d45dab085e523a, type: 2}
   m_IsPrefabParent: 0
+<<<<<<< HEAD
 --- !u!1 &151948522
 GameObject:
   m_ObjectHideFlags: 0
@@ -6593,6 +6597,8 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 151948522}
+=======
+>>>>>>> master
 --- !u!1001 &158189540
 Prefab:
   m_ObjectHideFlags: 0
@@ -11776,6 +11782,7 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e22b8ab1a3b03df4a8d45dab085e523a, type: 2}
   m_IsPrefabParent: 0
+<<<<<<< HEAD
 --- !u!1 &286113718
 GameObject:
   m_ObjectHideFlags: 0
@@ -11811,6 +11818,8 @@ RectTransform:
   m_AnchoredPosition: {x: 348, y: -114}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+=======
+>>>>>>> master
 --- !u!1001 &286174940
 Prefab:
   m_ObjectHideFlags: 0
@@ -16067,6 +16076,7 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e22b8ab1a3b03df4a8d45dab085e523a, type: 2}
   m_IsPrefabParent: 0
+<<<<<<< HEAD
 --- !u!1 &380286275
 GameObject:
   m_ObjectHideFlags: 0
@@ -16102,6 +16112,8 @@ RectTransform:
   m_AnchoredPosition: {x: 348, y: -114}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+=======
+>>>>>>> master
 --- !u!1001 &381676444
 Prefab:
   m_ObjectHideFlags: 0
@@ -18736,6 +18748,7 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e22b8ab1a3b03df4a8d45dab085e523a, type: 2}
   m_IsPrefabParent: 0
+<<<<<<< HEAD
 --- !u!1 &446566457
 GameObject:
   m_ObjectHideFlags: 0
@@ -18771,6 +18784,8 @@ RectTransform:
   m_AnchoredPosition: {x: 348, y: -114}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+=======
+>>>>>>> master
 --- !u!4 &447981419 stripped
 Transform:
   m_PrefabParentObject: {fileID: 444250, guid: e22b8ab1a3b03df4a8d45dab085e523a, type: 2}
@@ -19432,6 +19447,7 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d502a0b0a0064044d83e8d1ae183f2ee, type: 2}
   m_IsPrefabParent: 0
+<<<<<<< HEAD
 --- !u!1 &458449183
 GameObject:
   m_ObjectHideFlags: 0
@@ -19521,6 +19537,8 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 458449183}
+=======
+>>>>>>> master
 --- !u!1001 &459708836
 Prefab:
   m_ObjectHideFlags: 0
@@ -27573,6 +27591,7 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e22b8ab1a3b03df4a8d45dab085e523a, type: 2}
   m_IsPrefabParent: 0
+<<<<<<< HEAD
 --- !u!1 &657835712
 GameObject:
   m_ObjectHideFlags: 0
@@ -27666,6 +27685,8 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 657835712}
+=======
+>>>>>>> master
 --- !u!1001 &658099309
 Prefab:
   m_ObjectHideFlags: 0
@@ -28008,6 +28029,7 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e22b8ab1a3b03df4a8d45dab085e523a, type: 2}
   m_IsPrefabParent: 0
+<<<<<<< HEAD
 --- !u!1 &669909179
 GameObject:
   m_ObjectHideFlags: 0
@@ -28097,6 +28119,8 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 669909179}
+=======
+>>>>>>> master
 --- !u!1001 &670727751
 Prefab:
   m_ObjectHideFlags: 0
@@ -31331,6 +31355,7 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e22b8ab1a3b03df4a8d45dab085e523a, type: 2}
   m_IsPrefabParent: 0
+<<<<<<< HEAD
 --- !u!1 &751330818
 GameObject:
   m_ObjectHideFlags: 0
@@ -31407,6 +31432,8 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 751330818}
+=======
+>>>>>>> master
 --- !u!1001 &753714567
 Prefab:
   m_ObjectHideFlags: 0
@@ -40418,6 +40445,7 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e22b8ab1a3b03df4a8d45dab085e523a, type: 2}
   m_IsPrefabParent: 0
+<<<<<<< HEAD
 --- !u!1 &1009130545
 GameObject:
   m_ObjectHideFlags: 0
@@ -40453,6 +40481,8 @@ RectTransform:
   m_AnchoredPosition: {x: 50.2, y: 50}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+=======
+>>>>>>> master
 --- !u!1001 &1009399209
 Prefab:
   m_ObjectHideFlags: 0
@@ -46247,6 +46277,7 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d502a0b0a0064044d83e8d1ae183f2ee, type: 2}
   m_IsPrefabParent: 0
+<<<<<<< HEAD
 --- !u!1 &1150548945
 GameObject:
   m_ObjectHideFlags: 0
@@ -46323,6 +46354,8 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1150548945}
+=======
+>>>>>>> master
 --- !u!1001 &1151787782
 Prefab:
   m_ObjectHideFlags: 0
@@ -48636,6 +48669,7 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e22b8ab1a3b03df4a8d45dab085e523a, type: 2}
   m_IsPrefabParent: 0
+<<<<<<< HEAD
 --- !u!1 &1213772159
 GameObject:
   m_ObjectHideFlags: 0
@@ -48712,6 +48746,8 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1213772159}
+=======
+>>>>>>> master
 --- !u!1001 &1219117654
 Prefab:
   m_ObjectHideFlags: 0
@@ -52620,6 +52656,7 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d502a0b0a0064044d83e8d1ae183f2ee, type: 2}
   m_IsPrefabParent: 0
+<<<<<<< HEAD
 --- !u!1 &1324104768
 GameObject:
   m_ObjectHideFlags: 0
@@ -52710,6 +52747,8 @@ RectTransform:
   m_AnchoredPosition: {x: -54, y: -1}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
+=======
+>>>>>>> master
 --- !u!1001 &1324356297
 Prefab:
   m_ObjectHideFlags: 0
@@ -56561,6 +56600,7 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e22b8ab1a3b03df4a8d45dab085e523a, type: 2}
   m_IsPrefabParent: 0
+<<<<<<< HEAD
 --- !u!1 &1404147137
 GameObject:
   m_ObjectHideFlags: 0
@@ -56596,6 +56636,8 @@ RectTransform:
   m_AnchoredPosition: {x: 348, y: -114}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+=======
+>>>>>>> master
 --- !u!1001 &1405928044
 Prefab:
   m_ObjectHideFlags: 0
@@ -58494,7 +58536,7 @@ Transform:
   - {fileID: 423755529}
   - {fileID: 1186757782}
   m_Father: {fileID: 0}
-  m_RootOrder: 1587
+  m_RootOrder: 1589
 --- !u!1001 &1456625485
 Prefab:
   m_ObjectHideFlags: 0
@@ -63872,6 +63914,7 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e22b8ab1a3b03df4a8d45dab085e523a, type: 2}
   m_IsPrefabParent: 0
+<<<<<<< HEAD
 --- !u!1 &1588769887
 GameObject:
   m_ObjectHideFlags: 0
@@ -63942,6 +63985,8 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1588769887}
+=======
+>>>>>>> master
 --- !u!1001 &1591042174
 Prefab:
   m_ObjectHideFlags: 0
@@ -66405,6 +66450,7 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e22b8ab1a3b03df4a8d45dab085e523a, type: 2}
   m_IsPrefabParent: 0
+<<<<<<< HEAD
 --- !u!1 &1669062071
 GameObject:
   m_ObjectHideFlags: 0
@@ -66505,6 +66551,8 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+=======
+>>>>>>> master
 --- !u!1001 &1669517816
 Prefab:
   m_ObjectHideFlags: 0
@@ -76322,6 +76370,7 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e22b8ab1a3b03df4a8d45dab085e523a, type: 2}
   m_IsPrefabParent: 0
+<<<<<<< HEAD
 --- !u!1 &1898358164
 GameObject:
   m_ObjectHideFlags: 0
@@ -76398,6 +76447,8 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1898358164}
+=======
+>>>>>>> master
 --- !u!1001 &1901493901
 Prefab:
   m_ObjectHideFlags: 0
@@ -78365,6 +78416,88 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bb6e4b12059d77b478af3c1b12dfe28c, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &1964106697
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 22499092, guid: 4ad49f6f48fded6428223847f34c88e8, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22499092, guid: 4ad49f6f48fded6428223847f34c88e8, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22499092, guid: 4ad49f6f48fded6428223847f34c88e8, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22499092, guid: 4ad49f6f48fded6428223847f34c88e8, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22499092, guid: 4ad49f6f48fded6428223847f34c88e8, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22499092, guid: 4ad49f6f48fded6428223847f34c88e8, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22499092, guid: 4ad49f6f48fded6428223847f34c88e8, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 22499092, guid: 4ad49f6f48fded6428223847f34c88e8, type: 2}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 22499092, guid: 4ad49f6f48fded6428223847f34c88e8, type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22499092, guid: 4ad49f6f48fded6428223847f34c88e8, type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22499092, guid: 4ad49f6f48fded6428223847f34c88e8, type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22499092, guid: 4ad49f6f48fded6428223847f34c88e8, type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22499092, guid: 4ad49f6f48fded6428223847f34c88e8, type: 2}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22499092, guid: 4ad49f6f48fded6428223847f34c88e8, type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22499092, guid: 4ad49f6f48fded6428223847f34c88e8, type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22499092, guid: 4ad49f6f48fded6428223847f34c88e8, type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22499092, guid: 4ad49f6f48fded6428223847f34c88e8, type: 2}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22499092, guid: 4ad49f6f48fded6428223847f34c88e8, type: 2}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 4ad49f6f48fded6428223847f34c88e8, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &1965160058
 Prefab:
@@ -83065,6 +83198,7 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e22b8ab1a3b03df4a8d45dab085e523a, type: 2}
   m_IsPrefabParent: 0
+<<<<<<< HEAD
 --- !u!1 &2096640390
 GameObject:
   m_ObjectHideFlags: 0
@@ -83135,6 +83269,8 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2096640390}
+=======
+>>>>>>> master
 --- !u!1001 &2098758475
 Prefab:
   m_ObjectHideFlags: 0
@@ -84861,6 +84997,7 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e22b8ab1a3b03df4a8d45dab085e523a, type: 2}
   m_IsPrefabParent: 0
+<<<<<<< HEAD
 --- !u!1 &2137374259
 GameObject:
   m_ObjectHideFlags: 0
@@ -84896,6 +85033,8 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -596, y: -128}
   m_Pivot: {x: 0.5, y: 0.5}
+=======
+>>>>>>> master
 --- !u!1001 &2138160979
 Prefab:
   m_ObjectHideFlags: 0

@@ -61,7 +61,7 @@ public class CameraController : MonoBehaviour {
 
     // Update is called once per frame
     void FixedUpdate () {
-        Debug.Log(_allowParallax);
+
         Vector3 finalSpot = new Vector3(player.transform.position.x + xOffset, player.transform.position.y + yOffset, transform.position.z);
 
         if (isFollowing)
