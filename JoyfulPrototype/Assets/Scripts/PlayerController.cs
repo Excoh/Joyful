@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
     public Transform groundCheck;
     public float groundCheckRadius;
     public LayerMask whatIsGround;
+    public LayerMask whatisDestructibles;
 
 
     //fields dealing with player projectiles
@@ -143,7 +144,7 @@ public class PlayerController : MonoBehaviour
 
     void _Sense()
     {
-        this._grounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
+        this._grounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround) || Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatisDestructibles);
         //shows a vector between the player and where the mouse is
         _mouseV = Input.mousePosition;
         _mouseV.z = 10f;
