@@ -22185,6 +22185,10 @@ Prefab:
       propertyPath: hotSpot.y
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 8246324, guid: e6bcb3e9fbc147b489d2e2149b34dd91, type: 2}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e6bcb3e9fbc147b489d2e2149b34dd91, type: 2}
   m_IsPrefabParent: 0
@@ -57382,11 +57386,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22441698, guid: 705e137fcb35b16488f51a418900a12c, type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22441698, guid: 705e137fcb35b16488f51a418900a12c, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 705e137fcb35b16488f51a418900a12c, type: 2}
