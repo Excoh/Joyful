@@ -30,7 +30,8 @@ public class LifeManager : MonoBehaviour {
 	void Update () {
 		if (lifeCounter <= 0)
 		{
-			gameOverScreen.SetActive(true);
+            PlayerPrefs.SetInt("CurrentScene", Application.loadedLevel);
+            Application.LoadLevel("game_over");
 			player.gameObject.SetActive(false);
 		}
 

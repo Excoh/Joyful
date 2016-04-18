@@ -352,10 +352,6 @@ public class PlayerController : MonoBehaviour
 
     public void PowerUp(int powerup)
     {
-
-
-
-
         switch(powerup)
         {
             case 2:
@@ -378,9 +374,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log(tempmov);
         Debug.Log(tempshotdelay);
         moveSpeed = tempmov;
-        shotDelay = tempshotdelay;
-        
-        
+        shotDelay = tempshotdelay;        
     }
 
     //the player jumps, by setting a new velocity for the rigid body with the y value changed to the jumpVel field

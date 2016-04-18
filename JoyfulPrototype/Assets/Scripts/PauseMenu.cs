@@ -34,7 +34,9 @@ public class PauseMenu : MonoBehaviour {
 
 	public void TitleScreen()
 	{
-		Application.LoadLevel (titleScreen);
+        isPaused = false;
+        PlayerPrefs.SetInt("CurrentScene", 1);
+        Application.LoadLevel (titleScreen);
 	}
 
 	public void Quit()

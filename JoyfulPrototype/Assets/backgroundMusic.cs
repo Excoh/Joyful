@@ -13,10 +13,22 @@ public class backgroundMusic : MonoBehaviour {
 
     void Update()
     {
-        if(Application.loadedLevel == 4)
+        if(Application.loadedLevel == 5)
         {
-            
-            Destroy(gameObject);
+            if (PlayerPrefs.GetInt("CurrentScene") == 1)
+            {
+                Destroy(this.gameObject);
+            }
+            else {
+                this.gameObject.GetComponent<AudioSource>().mute = true;
+            }
+        } else if(Application.loadedLevel == 0 || Application.loadedLevel == 4)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            this.gameObject.GetComponent<AudioSource>().mute = false;
         }
     }
 

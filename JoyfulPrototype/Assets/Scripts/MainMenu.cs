@@ -10,6 +10,7 @@ public class MainMenu : MonoBehaviour {
 
 	public void NewGame()
 	{
+        PlayerPrefs.SetInt("CurrentScene", 1);
 		Application.LoadLevel (1);
 
 		PlayerPrefs.SetInt ("PlayerCurrentLives", playerLives);
@@ -22,7 +23,27 @@ public class MainMenu : MonoBehaviour {
         PlayerPrefs.SetInt("ProjectileCount", 100);
 	}
 
-	public void LevelSelect()
+    public void ContinueGame()
+    {
+        Application.LoadLevel(PlayerPrefs.GetInt("CurrentScene"));
+
+        PlayerPrefs.SetInt("PlayerCurrentLives", playerLives);
+
+        PlayerPrefs.SetInt("CurrentScore", 0);
+
+        PlayerPrefs.SetInt("PlayerCurrentHealth", playerHealth);
+        PlayerPrefs.SetInt("PlayerMaxHealth", playerHealth);
+
+        PlayerPrefs.SetInt("ProjectileCount", 100);
+    }
+
+    public void TitleScreen()
+    {
+        PlayerPrefs.SetInt("CurrentScene", 1);
+        Application.LoadLevel(0);
+    }
+
+    public void LevelSelect()
 	{
 		//PlayerPrefs.SetInt ("PlayerCurrentLives", playerLives);
 
